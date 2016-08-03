@@ -79,7 +79,6 @@ void TMainWindow::setProgramSelector()
 {
 	TLinkListItem<TProgram> *l_current=openFileList.getProgramsStart();
 	QStandardItemModel *l_model=new QStandardItemModel(0,3,this);
-	QString l_search=ui.searchText->text().toLower();
 	l_model->setHorizontalHeaderItem(0,new QStandardItem(i18n("Program")));
 	l_model->setHorizontalHeaderItem(1,new QStandardItem(i18n("Proces ID")));
 	l_model->setHorizontalHeaderItem(2,new QStandardItem(i18n("Path")));
