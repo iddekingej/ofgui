@@ -33,7 +33,7 @@ feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAG
 
 KI18N_WRAP_UI(ofgui_ui_h main.ui)
 
-#qt5_add_resources(ofgui_rcc_h resources/icons.qrc)
+qt5_add_resources(ofgui_res_h icons.qrc)
 
 set(ofgui_SRCS   
 	main.cpp 
@@ -41,7 +41,7 @@ set(ofgui_SRCS
 	data.cpp
 )
 
-set(ofgui_SRCS ${ofgui_rcc_h} ${ofgui_SRCS} ${ofgui_ui_h})
+set(ofgui_SRCS ${ofgui_res_h} ${ofgui_SRCS} ${ofgui_ui_h})
 
 add_executable(ofgui ${ofgui_SRCS})
 

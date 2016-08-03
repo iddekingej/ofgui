@@ -1,6 +1,7 @@
 #ifndef __MAINWINDOW_H_
 #define __MAINWINDOW_H_
 #include <QMainWindow>
+#include <QTreeView>
 #include <QTimer>
 #include "ui_main.h"
 #include "data.h"
@@ -13,11 +14,14 @@ private slots:
 	void onlyRealFilesChecked(int p_state);
 	void timeOut();
 	void timeOutChanged();
+	void refreshButton();
+	void searchPressed();
 private:
 	Ui::MainWindow ui;
 	TOpenFileList openFileList;
 	QTimer refreshTimer;
 	bool updating;
+	QString searchText;
 	
 	void refresh();
 	void fillOpenFileGrid();

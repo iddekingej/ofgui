@@ -4,10 +4,19 @@
 #include <QStandardItem>
 #include <QCheckBox>
 #include <QTimer>
+#include <QFileInfo>
 #include <klocalizedstring.h>
 #include "data.h"
 #include "linklist.h"
 #include "globals.h"
+
+
+void TMainWindow::searchPressed()
+{
+	searchText=ui.searchText->text().toLower();
+	printf("XXX\n");
+	refresh();
+}
 
 void TMainWindow::onlyRealFilesChecked(int p_state)
 {
@@ -29,6 +38,11 @@ void TMainWindow::timeOut()
 void TMainWindow::timeOutChanged()
 {
 	checkRefresh(0);
+}
+
+void TMainWindow::refreshButton()
+{
+	refresh();
 }
 
 void TMainWindow::refresh()
@@ -64,34 +78,44 @@ void TMainWindow::checkRefresh(int p_state)
 void TMainWindow::setProgramSelector()
 {
 	TLinkListItem<TProgram> *l_current=openFileList.getProgramsStart();
-	QStandardItemModel *l_model=new QStandardItemModel(0,1,this);
-	QStandardItem *l_item;
-	QString l_name;
+	QStandardItemModel *l_model=new QStandardItemModel(0,3,this);
+	QString l_search=ui.searchText->text().toLower();
+	l_model->setHorizontalHeaderItem(0,new QStandardItem(i18n("Program")));
+	l_model->setHorizontalHeaderItem(1,new QStandardItem(i18n("Proces ID")));
+	l_model->setHorizontalHeaderItem(2,new QStandardItem(i18n("Path")));
+	QStandardItem *l_item;	
+	QString l_path;
 	int l_cnt=1;
 	l_item=new QStandardItem("");
 	l_item->setData(QVariant(0),Qt::UserRole + 1);
+	l_model->setItem(0,0,l_item);
 	l_model->setItem(0,1,new QStandardItem(""));
+	l_model->setItem(0,2,new QStandardItem(""));
 	long l_selectedId=ui.programSelection->currentData(Qt::UserRole+1).toInt();
 	long l_selectedIdx=0;
 	while(l_current != nullptr){
-		if(l_current->getItem()->hasOpenFile()){
-			if(l_current->getItem()->getProgramName().length()==0){
-				l_name="ID="+QString::number(l_current->getItem()->getId());
-			} else {
-				l_name=l_current->getItem()->getProgramName();
-			}		
-			l_item=new QStandardItem(l_name);
+		if(l_current->getItem()->hasOpenFile()  ){			
+			QFileInfo l_info(l_current->getItem()->getProgramName());
+			l_item=new QStandardItem(l_info.fileName());
 			l_item->setData(QVariant(l_current->getItem()->getId()), Qt::UserRole + 1);			
 			if(l_current->getItem()->getId()==l_selectedId){
 				l_selectedIdx=l_cnt;
 			}
-			l_model->setItem(l_cnt,l_item);
+			l_model->setItem(l_cnt,1,new QStandardItem(QString::number(l_current->getItem()->getId())));
+			l_model->setItem(l_cnt,0,l_item);
+			l_model->setItem(l_cnt,2,new QStandardItem(l_info.filePath()));
 			l_cnt++;
 		}
 		l_current=l_current->getNext();
 		
 	}
 	ui.programSelection->setModel(l_model);
+	QTreeView *l_programSelectList= new QTreeView(ui.programSelection);	
+	l_programSelectList->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+	
+	//programSelectList->setSortingEnabled(true);
+	ui.programSelection->setView(l_programSelectList);
 	ui.programSelection->setModelColumn(0);
 	ui.programSelection->setCurrentIndex(l_selectedIdx);
 }
@@ -111,7 +135,7 @@ void TMainWindow::fillOpenFileGrid()
 	while (l_current != nullptr){
 		if((l_programId ==0 || (l_current->getItem()->getOwner()->getId()==l_programId))
 		&& (!l_onlyRealFiles|| l_current->getItem()->getRealFile())
-			
+		&& (searchText.length()==0 || l_current->getItem()->getFileName().toLower().contains(searchText))		
 		) {
 			l_model->setItem(l_cnt,0,new QStandardItem(QString::number(l_current->getItem()->getFd())));
 			l_model->setItem(l_cnt,1,new QStandardItem(l_current->getItem()->getFileName()));
@@ -125,6 +149,7 @@ void TMainWindow::fillOpenFileGrid()
 	ui.openFileList->setModel(l_model);
 	ui.openFileList->resizeRowsToContents();
 	ui.openFileList->resizeColumnsToContents();	
+
 }
 
 TMainWindow::TMainWindow(QWidget* p_parent):QMainWindow(p_parent)
@@ -138,7 +163,8 @@ TMainWindow::TMainWindow(QWidget* p_parent):QMainWindow(p_parent)
 	connect(ui.checkRefresh,SIGNAL(stateChanged(int)),this,SLOT(checkRefresh(int)));	
 	connect(ui.refreshTime,SIGNAL(editingFinished()),this,SLOT(timeOutChanged()));
 	connect(ui.action_Exit,&QAction::triggered,g_app,QApplication::quit);
+	connect(ui.refreshButton,SIGNAL(pressed()),this,SLOT(refreshButton())); 
+	connect(ui.searchButton,SIGNAL(pressed()),this,SLOT(searchPressed())); 
 	connect(&refreshTimer,SIGNAL(timeout()),this,SLOT(timeOut()));
-
 
 }
