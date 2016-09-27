@@ -1,0 +1,2 @@
+search.png  - Adwaita icons system-search.png
+refresh.png - Adwaita icon view-refresh.png

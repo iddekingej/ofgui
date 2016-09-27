@@ -24,7 +24,8 @@ bool readString(QString p_path,QString p_name,QString &p_value)
 		return false;
 	}
 	QTextStream l_stream(&l_file);
-	p_value=l_stream.readLine();
+	QString l_value=l_stream.readLine();
+	p_value=l_value.trimmed();
 	l_succes=(l_stream.status() ==  QTextStream::Ok);
 	l_file.close();
 	
