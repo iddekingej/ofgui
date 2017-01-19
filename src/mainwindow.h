@@ -5,6 +5,7 @@
 #include <QTimer>
 #include "ui_main.h"
 #include "data.h"
+#include <QKeyEvent>
 class TMainWindow:public QMainWindow
 {
 	Q_OBJECT
@@ -26,7 +27,6 @@ private:
 	void refresh();
 	void fillOpenFileGrid();
 	void setProgramSelector();
-
 public:
 	TMainWindow(QWidget *p_parent=nullptr);
 };

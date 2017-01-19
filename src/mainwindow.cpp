@@ -10,11 +10,12 @@
 #include "linklist.h"
 #include "globals.h"
 #include "os.h"
+#include <iostream>
+
 
 void TMainWindow::searchPressed()
 {
 	searchText=ui.searchText->text().toLower();
-	printf("XXX\n");
 	refresh();
 }
 

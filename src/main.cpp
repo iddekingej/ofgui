@@ -10,14 +10,14 @@ QApplication *g_app;
 int main(int argc, char **argv) {
 	
 	g_app=new QApplication(argc,argv);
-	KLocalizedString::setApplicationDomain("dingui");
+	KLocalizedString::setApplicationDomain("ofgui");
 	KAboutData l_aboutData(
-			"ding"
-		,	i18n("Disk information gui")
-		,	"0.4.4"
+			"ofgui"
+		,	i18n("Open file gui")
+		,	"0.1"
 		,	i18n("X")
 		,	KAboutLicense::GPL
-		,	i18n("(C) 2016")
+		,	i18n("(C) 2017")
 		,	i18n("x")
 		,	QStringLiteral("X")
 		,	QStringLiteral("X")
