@@ -31,14 +31,15 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
     
 
-KI18N_WRAP_UI(ofgui_ui_h main.ui)
+KI18N_WRAP_UI(ofgui_ui_h ui/main.ui)
 
 qt5_add_resources(ofgui_res_h icons.qrc)
 
 set(ofgui_SRCS   
-	main.cpp 
-	mainwindow.cpp
-	data.cpp
+	src/main.cpp 
+	src/mainwindow.cpp
+	src/os.cpp
+	src/data.cpp
 )
 
 set(ofgui_SRCS ${ofgui_res_h} ${ofgui_SRCS} ${ofgui_ui_h})
@@ -59,3 +60,4 @@ install(TARGETS ofgui  ${INSTALL_TARGETS_DEFAULT_ARGS})
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
 add_subdirectory(po)
+

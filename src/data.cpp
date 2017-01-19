@@ -5,14 +5,16 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QFile>
+#include "os.h"
 
-
-//Used for reading files in /sys/block
-//Read file containing string (like /sys/block/sda/mode)
-//p_path  - Path 
-//p_name  - File name under path to read
-//p_value - Returned value
-//Return    true when successful  false file reading error
+/**
+ * Used for reading files in /sys/block
+*Read file containing string (like /sys/block/sda/mode)
+*\param p_path   Base path  to file
+*\param p_name   File name under path to read
+*\param p_value  Read one line  from p_path+"/"+p_file and returns it in p_value
+*\return         true when successful  false file reading error
+*/
 
 bool readString(QString p_path,QString p_name,QString &p_value)
 {
@@ -76,6 +78,7 @@ void TOpenFileList::processOpenFiles(const QString &p_path,TProgram *p_program)
 	long l_fd;
 	bool l_ok;
 	bool l_realFile;
+	
 	while(l_ofdi.hasNext()){
 		l_ofdi.next();
 		l_fd=l_ofdi.fileName().toLong(&l_ok);
@@ -95,15 +98,6 @@ void TOpenFileList::processOpenFiles(const QString &p_path,TProgram *p_program)
 	}
 }
 
-void TOpenFileList::processProc(const QString &p_path,long p_id)
-{
-	QDir l_dir(p_path);
-	QFile l_file(l_dir.absoluteFilePath("exe"));
-	
-	TProgram *l_program=new TProgram(p_id,l_file.symLinkTarget().toUtf8().data());
-	programs.append(l_program);
-	processOpenFiles(l_dir.absoluteFilePath("fd"),l_program);
-}
 
 void TOpenFileList::processInfo()
 {
@@ -114,11 +108,18 @@ void TOpenFileList::processInfo()
 	QString p_fileName;
 	bool l_ok;
 	long l_id;
+	long l_userId;
+	getAllUsers(users);
 	while(l_pi.hasNext()){
 		l_pi.next();
 		l_id=l_pi.fileName().toLong(&l_ok);
 		if(l_ok){
-			processProc(l_pi.filePath(),l_id);			
+			TProgram *l_program=new TProgram(l_id,QFile::symLinkTarget(l_pi.filePath()+QStringLiteral("/exe")));
+			programs.append(l_program);
+			l_userId=l_pi.fileInfo().ownerId();
+			l_program->setOwnerId(l_userId);
+			l_program->setOwner(users.value(l_userId));
+			processOpenFiles(l_pi.filePath()+"/fd/",l_program);
 		}
 	}
 }

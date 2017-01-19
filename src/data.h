@@ -2,6 +2,7 @@
 #define __DATA_H_
 
 #include <QList>
+#include <QMap>
 #include "linklist.h"
 
 class TOpenFile;
@@ -9,13 +10,19 @@ class TOpenFile;
 class TProgram{
 private:
 	QList<TOpenFile*> openFiles;
-	long    id;
+	long id;
+	long ownerId;
+	QString owner;
 	QString programName;
 public:
 	inline bool hasOpenFile(){ return openFiles.length()>0;}
 	inline QList<TOpenFile*> *getOpenFiles(){ return &openFiles;}
 	inline int getId(){ return id;}
 	inline const QString &getProgramName(){ return programName;}
+	inline void setOwnerId(long p_ownerId){ ownerId=p_ownerId;}
+	inline long getOwnerId(){ return ownerId;}
+	inline void setOwner(const QString &p_owner){ owner=p_owner;}
+	inline const QString &getOwner(){ return owner;}
 	void addOpenFile(TOpenFile *p_openFile);
 	TProgram(long p_id,const QString &p_programName);
 };
@@ -41,9 +48,9 @@ class TOpenFileList
 private:
 	TLinkList<TProgram>  programs;
 	TLinkList<TOpenFile> openFiles;
+	QMap<uint,QString>   users;
 	
 	void processOpenFiles(const QString &p_path,TProgram *p_program);
-	void processProc(const QString &p_fileName,long p_id);
 public:
 	inline TLinkListItem<TProgram> *getProgramsStart(){ return programs.getStart();}
 	inline TLinkListItem<TOpenFile> *getOpenFilesStart(){ return openFiles.getStart();}

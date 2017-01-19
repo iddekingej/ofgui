@@ -9,7 +9,7 @@
 #include "data.h"
 #include "linklist.h"
 #include "globals.h"
-
+#include "os.h"
 
 void TMainWindow::searchPressed()
 {
@@ -64,6 +64,9 @@ void TMainWindow::checkRefresh(int p_state)
 		float l_value;
 		bool l_ok;
 		l_value=ui.refreshTime->text().toFloat(&l_ok);
+		if(l_value==0) {
+			l_value=1;
+		}
 		if(l_ok){
 			refreshTimer.start(int(l_value*1000));
 		} else {
@@ -78,10 +81,11 @@ void TMainWindow::checkRefresh(int p_state)
 void TMainWindow::setProgramSelector()
 {
 	TLinkListItem<TProgram> *l_current=openFileList.getProgramsStart();
-	QStandardItemModel *l_model=new QStandardItemModel(0,3,this);
+	QStandardItemModel *l_model=new QStandardItemModel(0,4,this);
 	l_model->setHorizontalHeaderItem(0,new QStandardItem(i18n("Program")));
 	l_model->setHorizontalHeaderItem(1,new QStandardItem(i18n("Proces ID")));
 	l_model->setHorizontalHeaderItem(2,new QStandardItem(i18n("Path")));
+	l_model->setHorizontalHeaderItem(3,new QStandardItem(i18n("User")));
 	QStandardItem *l_item;	
 	QString l_path;
 	int l_cnt=1;
@@ -103,6 +107,7 @@ void TMainWindow::setProgramSelector()
 			l_model->setItem(l_cnt,1,new QStandardItem(QString::number(l_current->getItem()->getId())));
 			l_model->setItem(l_cnt,0,l_item);
 			l_model->setItem(l_cnt,2,new QStandardItem(l_info.filePath()));
+			l_model->setItem(l_cnt,3,new QStandardItem(l_current->getItem()->getOwner()));
 			l_cnt++;
 		}
 		l_current=l_current->getNext();
@@ -122,7 +127,7 @@ void TMainWindow::setProgramSelector()
 void TMainWindow::fillOpenFileGrid()
 {
 	TLinkListItem<TOpenFile> *l_current=openFileList.getOpenFilesStart();
-	QStandardItemModel *l_model=new QStandardItemModel(0,4,this);
+	QStandardItemModel *l_model=new QStandardItemModel(0,5,this);
 	QVariant l_selected=ui.programSelection->currentData(Qt::UserRole + 1);
 	long     l_programId=l_selected.toUInt();
 	int l_cnt=0;
@@ -131,6 +136,8 @@ void TMainWindow::fillOpenFileGrid()
 	l_model->setHorizontalHeaderItem(1,new QStandardItem(i18n("File name")));
 	l_model->setHorizontalHeaderItem(2,new QStandardItem(i18n("Prog. id.")));
 	l_model->setHorizontalHeaderItem(3,new QStandardItem(i18n("Prog. name")));
+	l_model->setHorizontalHeaderItem(4,new QStandardItem(i18n("Proc. owner")));
+
 	while (l_current != nullptr){
 		if((l_programId ==0 || (l_current->getItem()->getOwner()->getId()==l_programId))
 		&& (!l_onlyRealFiles|| l_current->getItem()->getRealFile())
@@ -140,14 +147,15 @@ void TMainWindow::fillOpenFileGrid()
 			l_model->setItem(l_cnt,1,new QStandardItem(l_current->getItem()->getFileName()));
 			l_model->setItem(l_cnt,2,new QStandardItem(QString::number(l_current->getItem()->getOwner()->getId())));
 			l_model->setItem(l_cnt,3,new QStandardItem(l_current->getItem()->getOwner()->getProgramName()));
+			l_model->setItem(l_cnt,4,new QStandardItem(l_current->getItem()->getOwner()->getOwner()));
 			l_cnt++;
 
 		}
 		l_current=l_current->getNext();
 	}
 	ui.openFileList->setModel(l_model);
-	ui.openFileList->resizeRowsToContents();
 	ui.openFileList->resizeColumnsToContents();	
+	ui.openFileList->resizeRowsToContents();
 
 }
 
