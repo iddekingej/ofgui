@@ -173,6 +173,7 @@ TMainWindow::TMainWindow(QWidget* p_parent):QMainWindow(p_parent)
 	connect(ui.action_Exit,&QAction::triggered,g_app,QApplication::quit);
 	connect(ui.refreshButton,SIGNAL(pressed()),this,SLOT(refreshButton())); 
 	connect(ui.searchButton,SIGNAL(pressed()),this,SLOT(searchPressed())); 
+	connect(ui.searchText,SIGNAL(returnPressed()),this,SLOT(searchPressed()));
 	connect(&refreshTimer,SIGNAL(timeout()),this,SLOT(timeOut()));
 
 }
