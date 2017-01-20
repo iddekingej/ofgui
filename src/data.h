@@ -7,15 +7,20 @@
 
 class TOpenFile;
 
-class TProgram{
+/**
+ * Represents process that has open files
+ */
+
+class TProcess {
 private:
 	QList<TOpenFile*> openFiles;
-	long id;
-	long ownerId;
+	long    id;
+	long    ownerId;
 	QString owner;
 	QString programName;
 public:
-	inline bool hasOpenFile(){ return openFiles.length()>0;}
+	TProcess(long p_id,const QString &p_programName);
+	inline bool hasOpenFile(){ return !openFiles.isEmpty();}
 	inline QList<TOpenFile*> *getOpenFiles(){ return &openFiles;}
 	inline int getId(){ return id;}
 	inline const QString &getProgramName(){ return programName;}
@@ -24,35 +29,37 @@ public:
 	inline void setOwner(const QString &p_owner){ owner=p_owner;}
 	inline const QString &getOwner(){ return owner;}
 	void addOpenFile(TOpenFile *p_openFile);
-	TProgram(long p_id,const QString &p_programName);
 };
 
+/**
+ * An open file, A \ref TProcess objects has 0 or n TOpenFile objects
+ */
 class TOpenFile
 {
 private:
-	TProgram *owner;
+	TProcess *owner;
 	long     fd;
 	QString  fileName;
 	bool     realFile;
 public:
-	inline TProgram *getOwner(){ return owner;}
+	inline TProcess *getOwner(){ return owner;}
 	inline long getFd(){ return fd;}
 	inline const QString &getFileName(){ return fileName;}
 	inline bool getRealFile(){return realFile;}
-	TOpenFile(bool p_realFile,TProgram *p_owner,long p_fd,const QString &p_fileName);
+	TOpenFile(bool p_realFile,TProcess *p_owner,long p_fd,const QString &p_fileName);
 };
 
 
-class TOpenFileList
+class TProcessList
 {
 private:
-	TLinkList<TProgram>  programs;
+	TLinkList<TProcess>  programs;
 	TLinkList<TOpenFile> openFiles;
 	QMap<uint,QString>   users;
 	
-	void processOpenFiles(const QString &p_path,TProgram *p_program);
+	void processOpenFiles(const QString &p_path,TProcess *p_program);
 public:
-	inline TLinkListItem<TProgram> *getProgramsStart(){ return programs.getStart();}
+	inline TLinkListItem<TProcess> *getProgramsStart(){ return programs.getStart();}
 	inline TLinkListItem<TOpenFile> *getOpenFilesStart(){ return openFiles.getStart();}
 	
 	void processInfo();

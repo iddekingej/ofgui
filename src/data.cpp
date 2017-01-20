@@ -7,6 +7,12 @@
 #include <QFile>
 #include "os.h"
 
+TProcess::TProcess(long int p_id, const QString& p_programName)
+{
+	id=p_id;
+	programName=p_programName;
+}
+
 /**
  * Used for reading files in /sys/block
 *Read file containing string (like /sys/block/sda/mode)
@@ -34,34 +40,33 @@ bool readString(QString p_path,QString p_name,QString &p_value)
 	return l_succes;
 }
 
-//Used for reading files in /sys/block
-//Read file containing ulong (like /sys/block/sda/size)
-//p_path  - Path 
-//p_name  - File name under path to read
-//p_value - Returned value
-//Return    true when successful  false file reading error
+/**
+ * Read one line from file in p_path+'/'+p_name , and converts it to a long
+ * 
+ *\param p_path       Path 
+ *\param p_name       File name under path to read
+ *\param p_value[out] Returned value
+ *\Return             true when successful  false file reading error
+*/
 
 bool readLong(QString p_path,QString p_name,unsigned long &p_value)
 {
 	QString l_string;
 	p_value=0;
+	bool l_ok;
 	if(!readString(p_path,p_name,l_string)) return false;
-	p_value=l_string.toULong();
-	return true;
+	p_value=l_string.toULong(&l_ok);
+	return l_ok;
 }
 
-TProgram::TProgram(long int p_id, const QString& p_programName)
-{
-	id=p_id;
-	programName=p_programName;
-}
 
-void TProgram::addOpenFile(TOpenFile* p_openFile)
+
+void TProcess::addOpenFile(TOpenFile* p_openFile)
 {
 	openFiles.append(p_openFile);
 }
 
-TOpenFile::TOpenFile(bool p_realFile,TProgram* p_owner, long int p_fd, const QString &p_fileName)
+TOpenFile::TOpenFile(bool p_realFile,TProcess* p_owner, long int p_fd, const QString &p_fileName)
 {
 	realFile=p_realFile;
 	owner=p_owner;
@@ -69,7 +74,7 @@ TOpenFile::TOpenFile(bool p_realFile,TProgram* p_owner, long int p_fd, const QSt
 	fileName=p_fileName;
 }
 
-void TOpenFileList::processOpenFiles(const QString &p_path,TProgram *p_program)
+void TProcessList::processOpenFiles(const QString &p_path,TProcess *p_program)
 {
 	TOpenFile *l_openFile;
 	QDir l_ofd(p_path);
@@ -99,7 +104,7 @@ void TOpenFileList::processOpenFiles(const QString &p_path,TProgram *p_program)
 }
 
 
-void TOpenFileList::processInfo()
+void TProcessList::processInfo()
 {
 	programs.clear();
 	openFiles.clear();
@@ -114,7 +119,7 @@ void TOpenFileList::processInfo()
 		l_pi.next();
 		l_id=l_pi.fileName().toLong(&l_ok);
 		if(l_ok){
-			TProgram *l_program=new TProgram(l_id,QFile::symLinkTarget(l_pi.filePath()+QStringLiteral("/exe")));
+			         TProcess *l_program=new TProcess(l_id,QFile::symLinkTarget(l_pi.filePath()+QStringLiteral("/exe")));
 			programs.append(l_program);
 			l_userId=l_pi.fileInfo().ownerId();
 			l_program->setOwnerId(l_userId);

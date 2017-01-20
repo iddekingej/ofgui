@@ -6,6 +6,7 @@
 #include "ui_main.h"
 #include "data.h"
 #include <QKeyEvent>
+#include <QTableView>
 class TMainWindow:public QMainWindow
 {
 	Q_OBJECT
@@ -13,18 +14,16 @@ private slots:
 	void checkRefresh(int p_state);
 	void programChanged(int p_index);
 	void onlyRealFilesChecked(int p_state);
-	void timeOut();
 	void timeOutChanged();
-	void refreshButton();
-	void searchPressed();
+	void refresh();
+
 private:
 	Ui::MainWindow ui;
-	TOpenFileList openFileList;
-	QTimer refreshTimer;
-	bool updating;
-	QString searchText;
+	TProcessList openFileList;  
+	QTableView   *processSelection;   /**< Widget used for displaying process list  in process selector*/
+	QTimer       refreshTimer;        /**< Timer used for refreshing the open file grid  */
+	/*QString      searchText;*/
 	
-	void refresh();
 	void fillOpenFileGrid();
 	void setProgramSelector();
 public:
