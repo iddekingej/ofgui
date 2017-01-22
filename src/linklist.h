@@ -1,5 +1,7 @@
-#ifndef __LINKLIST_H_
-#define __LINKLIST_H_
+#ifndef _LINKLIST_H_
+#define _LINKLIST_H_
+#include <stdio.h>
+
 template<class T>
 class TLinkList;
 
@@ -13,18 +15,28 @@ class TLinkListItem
 private:
 	T *item;   //Item
 protected:
+	/**
+	 * Next element in linklist.
+	 */
 	TLinkListItem<T> *next;	
 public:		
 	inline T *getItem(){ return item;} //GetItem from container
 	inline TLinkListItem<T> *getNext(){ return next;} //Next item in linked list
+/**
+ *  Destructor
+ *  When container is desturcted the containing element is also deleted
+ */	
+
 	~TLinkListItem()
 	{
 		delete item;
 	}
 	
-//Constructor
-//p_item : Item to add to list:
-//See TLinkList::Append
+/**
+ *Constructor
+ *\param p_item : Item to add to list: (see \ref TLinkList::append)
+ *
+ */
 
 	TLinkListItem(T *p_item)
 	{	
@@ -34,30 +46,49 @@ public:
 };
 
 
-//Linkedlist 
-//Create:  TLinkList<TMyObject> l_list()
-//Append item  l_list->append(myObject) (myObject of type TMyObject)
-//Get top:     l_link->getStart()
-//When listis is destoyes item is also deleted
+/**
+ * Linkedlist 
+ * Create:  TLinkList<TMyObject> l_list()
+ * Append item  l_list->append(myObject) (myObject of type TMyObject)
+ * Get top:     l_link->getStart()
+* When list is is destroyed item is also deleted
+*/
 
 template<class T>
 class TLinkList
 {
 private:
-	TLinkListItem<T> *start;   //start of linklist
-	TLinkListItem<T> *end;     //last in linkedlist
+	/**
+	 *  Start of linklist
+	 */
+	TLinkListItem<T> *start;   
+	
+	/**
+	 * Top of linked list. 
+	 * All items are added tot the end
+	 */
+	TLinkListItem<T> *end;     
+	
+	/**
+	 * Length of linklist
+	 */
+	long             length=0;
 public:
 		
 	inline TLinkListItem<T> *getStart(){ return start;} //start of linked list
+	inline TLinkListItem<T> *getEnd(){ return end;} //end of linked list
+	inline long getLength(){ return length;}
+	inline bool isEmpty(){ return start==nullptr;}
 	
 	TLinkList(){
 		end=nullptr;
 		start=nullptr;
 	}
-	~TLinkList(){
-		clear();
-	}
 	
+	/**
+	 * Clear all items from link list.
+	 * Also all containing items are deleted.
+	 */
 	void clear()
 	{
 		TLinkListItem<T> *l_current=start;
@@ -69,8 +100,23 @@ public:
 		}
 		end=nullptr;
 		start=nullptr;
+		length=0;
 	}
 	
+	/**
+	 *  Destructor
+	 *  All items on the lists are deleted
+	 */
+	
+	~TLinkList(){
+		clear();
+	}
+	
+	/**
+	 * Append item to list
+	 * 
+	 * \param p_item item to append
+	 */
 	
 	void append(T *p_item)
 	{
@@ -82,46 +128,54 @@ public:
 			end->next=l_item;
 		}
 		end=l_item;
+		length++;
 	}
 
-
-	int getLength()
-	{
-		TLinkListItem<T> *l_current=start;
-		int l_length=0;
-		while(l_current){
-			l_length++;
-			l_current=l_current->getNext();
-		}
-		return l_length;
-	}
 };
 
+/**
+ * Java like iterator for linklist
+ */
 
-#define LOOPLL(p_type,p_current,p_name) \
-{\
-	TLinkListItem<p_type> *p_name=(p_current);\
-	while(p_name){
+template<class T>
+class TLinkListIterator{
+private:
+	TLinkListItem<T> *current;
+	
+public:
+	inline TLinkListIterator(TLinkList<T> &p_list){
+		current=p_list.getStart();
+	}
+	
+	inline TLinkListIterator(TLinkList<T> *p_list){
+		current=p_list->getStart();
+	}
+	
+	/**
+	 *  Returns true when there is a next item.
+	 */
+	
+	inline bool hasNext(){
+		return current != nullptr;
+	}
+	
+	/**
+	 *  returns the current item and advances to the next item.
+	 */
+	
+	inline T* next(){
+		if(current != nullptr){
+			T *l_item=current->getItem();
+			current=current->getNext();
+			return l_item;
+		}
+		return nullptr;
+	}
 		
-#define LOOPLLEND(p_name) \
-	p_name=p_name->getNext();\
-	}\
-}
-
-
-#define LOOPLLN(p_type,p_current,p_name) \
-{\
-	int l_cnt=0;\
-	TLinkListItem<p_type> *p_name=(p_current);\
-	while(p_name){
-		
-#define LOOPLLNEND(p_name) \
-	p_name=p_name->getNext();\
-	l_cnt++;\
-	}\
-}
+};
 
 
 
 
 #endif
+

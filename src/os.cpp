@@ -3,9 +3,11 @@
 #include <pwd.h>
 #include <QMap>
 #include <QString>
-/** Get login name of user from the user id
+/** 
+ * Get user name of the user by the user id
  * 
  * \param p_uid  Userid 
+ * \return       Username belonging to userid in p_uid
  */
 QString getUsernameById(uint p_uid)
 {
@@ -18,9 +20,12 @@ QString getUsernameById(uint p_uid)
 }
 
 
-/**  Get list of users defined on the system
+/**  
+ * Get list of users defined on the system.
  * 
- * \param p_userList  id/username map of users defined in the system
+ * 
+ * \param p_userList  id/user name map of users defined in the system
+ *                    The index is the user id and the value is the username.
  */
 
 void getAllUsers(QMap<uint,QString> &p_userList)

@@ -21,7 +21,7 @@ TMainWindow::TMainWindow(QWidget* p_parent):QMainWindow(p_parent)
 	ui.processSelection->setView(processSelection);;	
 	processSelection->setSelectionMode(QAbstractItemView::SingleSelection);
 	processSelection->setSelectionBehavior(QAbstractItemView::SelectRows);
-	connect(ui.processSelection,SIGNAL(currentIndexChanged(int)),this,SLOT(programChanged(int)));	
+	connect(ui.processSelection,SIGNAL(currentIndexChanged(int)),this,SLOT(processChanged(int)));	
 	connect(ui.onlyRealFiles,SIGNAL(stateChanged(int)),this,SLOT(onlyRealFilesChecked(int)));
 	connect(ui.checkRefresh,SIGNAL(stateChanged(int)),this,SLOT(checkRefresh(int)));	
 	connect(ui.refreshTime,SIGNAL(editingFinished()),this,SLOT(timeOutChanged()));
@@ -35,13 +35,23 @@ TMainWindow::TMainWindow(QWidget* p_parent):QMainWindow(p_parent)
 	ui.refreshTime->setText("1");
 }
 
+/**
+ *  On the main window there is a checkbox "only real files".
+ *  When the checkbox is toggled this slot is called and the open file list is refresh
+ *  reflecting the new selection.
+ */
 
 void TMainWindow::onlyRealFilesChecked(int p_state)
 {
 	fillOpenFileGrid();
 }
 
-void TMainWindow::programChanged(int p_index)
+/**
+ *  After the proces selection is clanged, this slot is called.
+ *  The open file list is refreshed so only the open files of the selected proces are displayed
+ */
+
+void TMainWindow::processChanged(int p_index)
 {
 	fillOpenFileGrid();	
 }
@@ -54,10 +64,14 @@ void TMainWindow::timeOutChanged()
 	checkRefresh(0);
 }
 
+/**
+ *  Reread all proces and open file information and refreshed the open file list
+ *  and the process selector.
+ */
 
 void TMainWindow::refresh()
 {
-	openFileList.processInfo();
+	processList.processInfo();
 	setProgramSelector();
 	fillOpenFileGrid();
 	
@@ -104,8 +118,8 @@ void TMainWindow::checkRefresh(int p_state)
 
 void TMainWindow::setProgramSelector()
 {
-	ui.processSelection->blockSignals(true);
-	TLinkListItem<TProcess> *l_current=openFileList.getProgramsStart();
+	ui.processSelection->blockSignals(true);	
+	TLinkListIterator<TProcess> l_procIter(processList.getPrograms());
 	QStandardItemModel *l_model=new QStandardItemModel(0,4,this);
 	l_model->setHorizontalHeaderItem(0,new QStandardItem(i18n("Program")));
 	l_model->setHorizontalHeaderItem(1,new QStandardItem(i18n("Proces ID")));
@@ -121,25 +135,25 @@ void TMainWindow::setProgramSelector()
 	l_model->setItem(0,2,new QStandardItem(""));
 	long l_selectedId=ui.processSelection->currentData(Qt::UserRole+1).toInt();
 	long l_selectedIdx=0;
-	while(l_current != nullptr){
-		if(l_current->getItem()->hasOpenFile()){
-			QFileInfo l_info(l_current->getItem()->getProgramName());
+	TProcess *l_process;
+	while(l_procIter.hasNext()){
+		l_process=l_procIter.next();
+		if(l_process->hasOpenFile()){
+			QFileInfo l_info(l_process->getProgramName());
 			l_item=new QStandardItem(l_info.fileName());
-			l_item->setData(QVariant(l_current->getItem()->getId()), Qt::UserRole + 1);			
-			if(l_current->getItem()->getId()==l_selectedId){
+			l_item->setData(QVariant(l_process->getId()), Qt::UserRole + 1);			
+			if(l_process->getId()==l_selectedId){
 				l_selectedIdx=l_cnt;
 			}
-			l_model->setItem(l_cnt,1,new QStandardItem(QString::number(l_current->getItem()->getId())));
+			l_model->setItem(l_cnt,1,new QStandardItem(QString::number(l_process->getId())));
 			l_model->setItem(l_cnt,0,l_item);
 			l_model->setItem(l_cnt,2,new QStandardItem(l_info.filePath()));
-			l_model->setItem(l_cnt,3,new QStandardItem(l_current->getItem()->getOwner()));
+			l_model->setItem(l_cnt,3,new QStandardItem(l_process->getOwner()));
 			l_cnt++;
 		}
-		l_current=l_current->getNext();
 		
 	}
 	ui.processSelection->setModel(l_model);	
-	//programSelectList->setSortingEnabled(true);
 	ui.processSelection->setModelColumn(0);
 	ui.processSelection->setCurrentIndex(l_selectedIdx);
 	processSelection->resizeColumnsToContents();
@@ -149,15 +163,15 @@ void TMainWindow::setProgramSelector()
 
 
 /**
- *  Fill open file grid with open files.
+ *  This method fills open file grid with open files.
  */
 
 void TMainWindow::fillOpenFileGrid()
 {
-	TLinkListItem<TOpenFile> *l_current=openFileList.getOpenFilesStart();
+	TLinkListIterator<TOpenFile> l_ofIter(processList.getOpenFiles());
 	QStandardItemModel *l_model=new QStandardItemModel(0,5,this);
 	QVariant l_selected=ui.processSelection->currentData(Qt::UserRole + 1);
-	long     l_programId=l_selected.toUInt();
+	long l_programId=l_selected.toUInt();
 	int l_cnt=0;
 	bool l_onlyRealFiles=(ui.onlyRealFiles->checkState()==Qt::Checked);
 	l_model->setHorizontalHeaderItem(0,new QStandardItem(i18n("File descr.")));
@@ -166,20 +180,21 @@ void TMainWindow::fillOpenFileGrid()
 	l_model->setHorizontalHeaderItem(3,new QStandardItem(i18n("Prog. name")));
 	l_model->setHorizontalHeaderItem(4,new QStandardItem(i18n("Proc. owner")));
 	QString l_searchText=ui.searchText->text();
-	while (l_current != nullptr){
-		if((l_programId ==0 || (l_current->getItem()->getOwner()->getId()==l_programId))
-		&& (!l_onlyRealFiles|| l_current->getItem()->getRealFile())
-		&& (l_searchText.length()==0 || l_current->getItem()->getFileName().toLower().contains(l_searchText))		
+	TOpenFile *l_openFile;
+	while (l_ofIter.hasNext()){
+		l_openFile=l_ofIter.next();
+		if((l_programId ==0 || (l_openFile->getOwner()->getId()==l_programId))
+		&& (!l_onlyRealFiles|| l_openFile->getRealFile())
+		&& (l_searchText.length()==0 || l_openFile->getFileName().toLower().contains(l_searchText))		
 		) {
-			l_model->setItem(l_cnt,0,new QStandardItem(QString::number(l_current->getItem()->getFd())));
-			l_model->setItem(l_cnt,1,new QStandardItem(l_current->getItem()->getFileName()));
-			l_model->setItem(l_cnt,2,new QStandardItem(QString::number(l_current->getItem()->getOwner()->getId())));
-			l_model->setItem(l_cnt,3,new QStandardItem(l_current->getItem()->getOwner()->getProgramName()));
-			l_model->setItem(l_cnt,4,new QStandardItem(l_current->getItem()->getOwner()->getOwner()));
+			l_model->setItem(l_cnt,0,new QStandardItem(QString::number(l_openFile->getFd())));
+			l_model->setItem(l_cnt,1,new QStandardItem(l_openFile->getFileName()));
+			l_model->setItem(l_cnt,2,new QStandardItem(QString::number(l_openFile->getOwner()->getId())));
+			l_model->setItem(l_cnt,3,new QStandardItem(l_openFile->getOwner()->getProgramName()));
+			l_model->setItem(l_cnt,4,new QStandardItem(l_openFile->getOwner()->getOwner()));
 			l_cnt++;
 
-		}
-		l_current=l_current->getNext();
+		}		
 	}
 	ui.openFileList->setModel(l_model);
 	ui.openFileList->resizeColumnsToContents();	

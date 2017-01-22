@@ -59,8 +59,8 @@ private:
 	
 	void processOpenFiles(const QString &p_path,TProcess *p_program);
 public:
-	inline TLinkListItem<TProcess> *getProgramsStart(){ return programs.getStart();}
-	inline TLinkListItem<TOpenFile> *getOpenFilesStart(){ return openFiles.getStart();}
+	inline TLinkList<TProcess> *getPrograms(){ return &programs;}
+	inline TLinkList<TOpenFile> *getOpenFiles(){ return &openFiles;}
 	
 	void processInfo();
 };
