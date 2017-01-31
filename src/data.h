@@ -1,3 +1,20 @@
+/**
+ *  data.h
+ *  Part of ofgui.h
+ * 
+ *  (C) By Jeroen van Iddekinge (iddekingej@lycos.com)
+ * 
+ *  Data classes. 
+ *  
+ * Proces information is read from the /proc folder 
+ * 
+ * First the /proc folder is scanned for numerical files (containing proces information)
+ * for each proces a proces information object is created.
+ * For each proces the list of open files are read from /proc/#pid#/fd (e.g. /proc/2501/fd
+ * Open file information is added to the process information object 
+ *  
+ */
+
 #ifndef __DATA_H_
 #define __DATA_H_
 
@@ -8,15 +25,31 @@
 class TOpenFile;
 
 /**
- * Represents process that has open files
+ * Information about  processes running on the system 
  */
 
 class TProcess {
 private:
+	
+/**
+ * List of open files
+ */
 	QList<TOpenFile*> openFiles;
+/**
+ *pid of process
+ */	
 	long    id;
+/**
+ * user id of process owner
+ */	
 	long    ownerId;
+/**
+ *Username of process owner
+ */
 	QString owner;
+/**
+ *Program name of process
+ */	
 	QString programName;
 public:
 	TProcess(long p_id,const QString &p_programName);
@@ -34,19 +67,36 @@ public:
 /**
  * An open file, A \ref TProcess objects has 0 or n TOpenFile objects
  */
+
 class TOpenFile
 {
 private:
-	TProcess *owner;
+/**
+ *   Proces that opened the file
+ */
+	TProcess *process;
+/*
+ *  File handle ID
+ */
 	long     fd;
+	
+/**
+ *  Name of the file that is opened
+ */
+
 	QString  fileName;
+	
+/**
+ * True if it is a realfile or otherwise a socket,event fd etc...
+ * 
+ */
 	bool     realFile;
 public:
-	inline TProcess *getOwner(){ return owner;}
+	inline TProcess *getProcess(){ return process;}
 	inline long getFd(){ return fd;}
 	inline const QString &getFileName(){ return fileName;}
 	inline bool getRealFile(){return realFile;}
-	TOpenFile(bool p_realFile,TProcess *p_owner,long p_fd,const QString &p_fileName);
+	TOpenFile(bool p_realFile,TProcess *p_process,long p_fd,const QString &p_fileName);
 };
 
 

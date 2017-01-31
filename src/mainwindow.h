@@ -1,3 +1,13 @@
+/**
+ *  mainwindow.h
+ *  Part of ofgui.h
+ * 
+ *  (C) By Jeroen van Iddekinge (iddekingej@lycos.com)
+ * 
+ *  mainwindow class. 
+ *  The main windows displays the list with open files
+ */
+
 #ifndef __MAINWINDOW_H_
 #define __MAINWINDOW_H_
 #include <QMainWindow>
@@ -7,6 +17,7 @@
 #include "data.h"
 #include <QKeyEvent>
 #include <QTableView>
+
 class TMainWindow:public QMainWindow
 {
 	Q_OBJECT

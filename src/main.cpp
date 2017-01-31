@@ -6,6 +6,10 @@
 
 QApplication *g_app;
 
+/**
+ *  Main program of ofgui. 
+ * Initialize QT and main window
+ */
 
 int main(int argc, char **argv) {
 	

@@ -1,14 +1,25 @@
+/**
+ *  data.h
+ *  Part of ofgui.h
+ * 
+ *  (C) By Jeroen van Iddekinge (iddekingej@lycos.com)
+ * 
+ *  Some opensystem functions
+ */
+
 #include "os.h"
 #include <sys/types.h>
 #include <pwd.h>
 #include <QMap>
 #include <QString>
+
 /** 
  * Get user name of the user by the user id
  * 
  * \param p_uid  Userid 
  * \return       Username belonging to userid in p_uid
  */
+
 QString getUsernameById(uint p_uid)
 {
 	struct passwd *l_passwd=getpwuid(p_uid);
