@@ -6,65 +6,27 @@
 #include <QDirIterator>
 #include <QFile>
 #include "os.h"
-
+#include "processiterator.h"
+#include "openfileiterator.h"
+#include "utils.h"
 TProcess::TProcess(long int p_id, const QString& p_programName)
 {
 	id=p_id;
 	programName=p_programName;
 }
 
-/**
- * Used for reading files in /sys/block
-*Read file containing string (like /sys/block/sda/mode)
-*\param p_path   Base path  to file
-*\param p_name   File name under path to read
-*\param p_value  Read one line  from p_path+"/"+p_file and returns it in p_value
-*\return         true when successful  false file reading error
-*/
 
-bool readString(QString p_path,QString p_name,QString &p_value)
-{
-	bool l_succes;
-	QDir l_dir=QDir(p_path);	
-	QFile l_file(l_dir.absoluteFilePath(p_name));
-	if(!l_file.open(QIODevice::ReadOnly|QIODevice::Text)){
-		p_value= QStringLiteral("");
-		return false;
-	}
-	QTextStream l_stream(&l_file);
-	QString l_value=l_stream.readLine();
-	p_value=l_value.trimmed();
-	l_succes=(l_stream.status() ==  QTextStream::Ok);
-	l_file.close();
-	
-	return l_succes;
-}
 
 /**
- * Read one line from file in p_path+'/'+p_name , and converts it to a long
+ * Add information about open file to process
  * 
- *\param p_path       Path 
- *\param p_name       File name under path to read
- *\param p_value[out] Returned value
- *\Return             true when successful  false file reading error
-*/
-
-bool readLong(QString p_path,QString p_name,unsigned long &p_value)
-{
-	QString l_string;
-	p_value=0;
-	bool l_ok;
-	if(!readString(p_path,p_name,l_string)) return false;
-	p_value=l_string.toULong(&l_ok);
-	return l_ok;
-}
-
-
-
+ * \param p_openFile  Openfile to add to the process
+ */
 void TProcess::addOpenFile(TOpenFile* p_openFile)
 {
 	openFiles.append(p_openFile);
 }
+
 
 TOpenFile::TOpenFile(bool p_realFile,TProcess* p_owner, long int p_fd, const QString &p_fileName)
 {
@@ -74,32 +36,24 @@ TOpenFile::TOpenFile(bool p_realFile,TProcess* p_owner, long int p_fd, const QSt
 	fileName=p_fileName;
 }
 
+/**
+ * Information about open files from a proces is stored in /proc/#pid#/fd (where #pid#=process id)
+ * This method reads this information and creates TOpenFile object for each open file
+ * 
+ * \param p_path  Path to open file information /proc/#pid#/fd
+ * \param p_program Object representing the process Information about open file is added to this object
+ */
+
 void TProcessList::processOpenFiles(const QString &p_path,TProcess *p_program)
 {
 	TOpenFile *l_openFile;
-	QDir l_ofd(p_path);
-	QDirIterator l_ofdi(l_ofd);
 	QString l_file;
-	long l_fd;
-	bool l_ok;
-	bool l_realFile;
-	
-	while(l_ofdi.hasNext()){
-		l_ofdi.next();
-		l_fd=l_ofdi.fileName().toLong(&l_ok);
-		if(l_ok){
-			QFile l_fi(l_ofdi.filePath());
-			l_file=l_fi.symLinkTarget();
-			if(l_file.startsWith(p_path)){ // cludge :filter out special files
-				l_realFile=false;
-				l_file=QFileInfo(l_file).fileName();
-			}else {
-				l_realFile=true;
-			}
-			l_openFile=new TOpenFile(l_realFile,p_program,l_fd,l_file);
-			openFiles.append(l_openFile);
-			p_program->addOpenFile(l_openFile);
-		}
+	TOpenFileIterator l_iter(p_path);
+	while(l_iter.next()){
+		l_file=l_iter.getFileName();
+		l_openFile=new TOpenFile(l_iter.getRealFile(),p_program,l_iter.getFd(),l_file);
+		openFiles.append(l_openFile);
+		p_program->addOpenFile(l_openFile);
 	}
 }
 
@@ -107,25 +61,17 @@ void TProcessList::processOpenFiles(const QString &p_path,TProcess *p_program)
 void TProcessList::processInfo()
 {
 	programs.clear();
-	openFiles.clear();
-	QDir l_procs("/proc");
-	QDirIterator l_pi(l_procs);
-	QString p_fileName;
-	bool l_ok;
-	long l_id;
-	long l_userId;
+	openFiles.clear();	
 	getAllUsers(users);
-	while(l_pi.hasNext()){
-		l_pi.next();
-		l_id=l_pi.fileName().toLong(&l_ok);
-		if(l_ok){
-			         TProcess *l_program=new TProcess(l_id,QFile::symLinkTarget(l_pi.filePath()+QStringLiteral("/exe")));
-			programs.append(l_program);
-			l_userId=l_pi.fileInfo().ownerId();
-			l_program->setOwnerId(l_userId);
-			l_program->setOwner(users.value(l_userId));
-			processOpenFiles(l_pi.filePath()+"/fd/",l_program);
-		}
+	TProcessIterator l_iter;
+	while(l_iter.next()){
+		
+		TProcess *l_program=new TProcess(l_iter.getId(),l_iter.getExe());
+		programs.append(l_program);
+		l_program->setOwnerId(l_iter.getUid());
+		l_program->setOwner(users.value(l_iter.getUid()));
+		processOpenFiles(l_iter.getFilePath()+QStringLiteral("/fd/"),l_program);
+		
 	}
 }
 

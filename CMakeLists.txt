@@ -31,7 +31,10 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
     
 
-KI18N_WRAP_UI(ofgui_ui_h ui/main.ui)
+KI18N_WRAP_UI(ofgui_ui_h 
+	ui/main.ui
+	ui/monitor.ui
+)
 
 qt5_add_resources(ofgui_res_h icons.qrc)
 
@@ -40,6 +43,11 @@ set(ofgui_SRCS
 	src/mainwindow.cpp
 	src/os.cpp
 	src/data.cpp
+	src/monitordialog.cpp
+	src/processiterator.cpp
+	src/filelogitem.cpp
+	src/openfileiterator.cpp
+	src/utils.cpp
 )
 
 set(ofgui_SRCS ${ofgui_res_h} ${ofgui_SRCS} ${ofgui_ui_h})
