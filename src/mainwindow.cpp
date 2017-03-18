@@ -15,6 +15,11 @@
 #include "os.h"
 #include "monitordialog.h"
 
+/**
+ *  Main window constructor
+ *  Setup the window gui and the gui events
+ */
+
 TMainWindow::TMainWindow(QWidget* p_parent):QMainWindow(p_parent)
 {
 	ui.setupUi(this);
@@ -125,6 +130,7 @@ void TMainWindow::checkRefresh(int p_state)
 /**
  *  On the main Gui there is a selection list with currently running processes.
  *  When a proces is selected, only files used by this proces are displayed
+ *  Only files which has open files are added to the selection list.
  * 
  *  This routine fills this list
  */
@@ -196,15 +202,15 @@ void TMainWindow::fillOpenFileGrid()
 	TOpenFile *l_openFile;
 	while (l_ofIter.hasNext()){
 		l_openFile=l_ofIter.next();
-		if((l_programId ==0 || (l_openFile->getOwner()->getId()==l_programId))
+		if((l_programId ==0 || (l_openFile->getProcess()->getId()==l_programId))
 		&& (!l_onlyRealFiles|| l_openFile->getRealFile())
 		&& (l_searchText.length()==0 || l_openFile->getFileName().toLower().contains(l_searchText))		
 		) {
 			l_model->setItem(l_cnt,0,new QStandardItem(QString::number(l_openFile->getFd())));
 			l_model->setItem(l_cnt,1,new QStandardItem(l_openFile->getFileName()));
-			l_model->setItem(l_cnt,2,new QStandardItem(QString::number(l_openFile->getOwner()->getId())));
-			l_model->setItem(l_cnt,3,new QStandardItem(l_openFile->getOwner()->getProgramName()));
-			l_model->setItem(l_cnt,4,new QStandardItem(l_openFile->getOwner()->getOwner()));
+			l_model->setItem(l_cnt,2,new QStandardItem(QString::number(l_openFile->getProcess()->getId())));
+			l_model->setItem(l_cnt,3,new QStandardItem(l_openFile->getProcess()->getProgramName()));
+			l_model->setItem(l_cnt,4,new QStandardItem(l_openFile->getProcess()->getOwner()));
 			l_cnt++;
 
 		}		
@@ -213,4 +219,3 @@ void TMainWindow::fillOpenFileGrid()
 	ui.openFileList->resizeColumnsToContents();	
 	ui.openFileList->resizeRowsToContents();
 }
-

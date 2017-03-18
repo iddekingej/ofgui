@@ -5,8 +5,12 @@
 template<class T>
 class TLinkList;
 
-// Container class for item with T
-// Container is added to TLinklist
+/**
+ * Container class for item with T
+ * Container is added to TLinklist
+ * 
+ * \tparam T  Item type of the list
+ */
 
 template<class T>
 class TLinkListItem
@@ -22,7 +26,8 @@ protected:
 public:		
 	inline T *getItem(){ return item;} //GetItem from container
 	inline TLinkListItem<T> *getNext(){ return next;} //Next item in linked list
-/**
+
+	/**
  *  Destructor
  *  When container is desturcted the containing element is also deleted
  */	
@@ -50,9 +55,11 @@ public:
  * Linkedlist 
  * Create:  TLinkList<TMyObject> l_list()
  * Append item  l_list->append(myObject) (myObject of type TMyObject)
- * Get top:     l_link->getStart()
-* When list is is destroyed item is also deleted
-*/
+ * Get top:     l_link->getStart() 
+ * When list is is destroyed item is also deleted
+ * 
+ * \tparam T  Item  type of the list.
+ */
 
 template<class T>
 class TLinkList
@@ -75,10 +82,10 @@ private:
 	long             length=0;
 public:
 		
-	inline TLinkListItem<T> *getStart(){ return start;} //start of linked list
-	inline TLinkListItem<T> *getEnd(){ return end;} //end of linked list
-	inline long getLength(){ return length;}
-	inline bool isEmpty(){ return start==nullptr;}
+	inline TLinkListItem<T> *getStart() const{ return start;} //start of linked list
+	inline TLinkListItem<T> *getEnd() const{ return end;} //end of linked list
+	inline long getLength() const{ return length;}
+	inline bool isEmpty() const{ return start==nullptr;}
 	
 	TLinkList(){
 		end=nullptr;
@@ -135,6 +142,8 @@ public:
 
 /**
  * Java like iterator for linklist
+ * 
+ * \tparam T item type of list which is going to be iterated
  */
 
 template<class T>
@@ -143,9 +152,18 @@ private:
 	TLinkListItem<T> *current;
 	
 public:
+
+	
 	inline TLinkListIterator(TLinkList<T> &p_list){
 		current=p_list.getStart();
 	}
+	
+/**
+ * Constructor for iterating pointer to list 
+ * (TLinkListiterator&lt;MyObject&gt;(l_list)  when l_list is TLinkList&lt;MyObject&gt;*)
+ *
+ * \param p_list pointer to list
+ */	
 	
 	inline TLinkListIterator(TLinkList<T> *p_list){
 		current=p_list->getStart();
@@ -155,7 +173,7 @@ public:
 	 *  Returns true when there is a next item.
 	 */
 	
-	inline bool hasNext(){
+	inline bool hasNext() const{
 		return current != nullptr;
 	}
 	
@@ -173,8 +191,6 @@ public:
 	}
 		
 };
-
-
 
 
 #endif
