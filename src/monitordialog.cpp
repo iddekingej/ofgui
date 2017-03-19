@@ -17,11 +17,12 @@ TMonitorDialog::TMonitorDialog():QDialog()
 	connect(ui.closeButton,SIGNAL(pressed()),this,SLOT(close()));
 	connect(ui.startButton,SIGNAL(pressed()),this,SLOT(start()));
 	connect(ui.trackChanges,SIGNAL(clicked()),this,SLOT(monitorClicked()));
+	connect(ui.refreshProcessList,SIGNAL(pressed()),this,SLOT(fillProcessSelector()));
+	connect(ui.clearChanges,SIGNAL(pressed()),this,SLOT(clearChanges()));
 	connect(&refreshTimeout,SIGNAL(timeout()),this,SLOT(refresh()));
-	ui.nameFilter->setVisible(false);
-	ui.useSelection->setChecked(true);
 	processGrid=new QTableView();
 	ui.processSelector->setView(processGrid);
+	ui.clearChanges->setVisible(false);
 	fillProcessSelector();
 	ui.fileList->sortByColumn(2,Qt::AscendingOrder);
 }
@@ -30,6 +31,15 @@ TMonitorDialog::TMonitorDialog():QDialog()
  * When the "track clanged" checkbox is clicked  the "isNew" (Indicates entry is new or changed) is reset for all items. 
  */
 void TMonitorDialog::monitorClicked()
+{
+	ui.clearChanges->setVisible(ui.trackChanges->checkState()==Qt::Checked);
+	clearChanges();
+}
+
+/**
+ * Clear all change settings
+ */
+void TMonitorDialog::clearChanges()
 {
 	TLinkListIterator<TFileLogItem> l_iter(files);
 	while(l_iter.hasNext()){

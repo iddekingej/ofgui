@@ -13,7 +13,8 @@ private slots:
 	void start();
 	void refresh();
 	void monitorClicked();
-	
+	void fillProcessSelector();
+	void clearChanges();
 private:
 	Ui::monitor ui;
 	QTableView *processGrid;
@@ -22,7 +23,6 @@ private:
 	QTimer refreshTimeout;
 	
 	uint monitorPid=0;
-	void fillProcessSelector();
 	void readOpenFiles(int p_id);	
 	QStandardItem *createStandardItem(QString p_value,bool p_track,bool p_isNew);
 public:

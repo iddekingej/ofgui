@@ -33,36 +33,24 @@
       </widget>
      </item>
      <item>
-      <widget class="QWidget" name="widget" native="true">
+      <widget class="QPushButton" name="refreshProcessList">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QRadioButton" name="useNameFilter">
-          <property name="text">
-           <string>Enter name fi&amp;lter</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="useSelection">
-          <property name="text">
-           <string>Selec&amp;t proces</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../icons.qrc">
+         <normaloff>:/icons/refresh.png</normaloff>:/icons/refresh.png</iconset>
+       </property>
       </widget>
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_4">
-       <item>
-        <widget class="QLineEdit" name="nameFilter"/>
-       </item>
        <item>
         <widget class="QComboBox" name="processSelector"/>
        </item>
@@ -79,6 +67,13 @@
       <widget class="QCheckBox" name="trackChanges">
        <property name="text">
         <string>Track changes</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="clearChanges">
+       <property name="text">
+        <string>Clear changes</string>
        </property>
       </widget>
      </item>
@@ -129,6 +124,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../icons.qrc"/>
+ </resources>
  <connections/>
 </ui>
