@@ -59,9 +59,9 @@ void TMonitorDialog::fillProcessSelector()
 	QString l_userName;
 	
 	QStandardItemModel *l_model=new QStandardItemModel(3,0,this);
-	l_model->setHorizontalHeaderItem(0,new QStandardItem(QStringLiteral("Pid")));
-	l_model->setHorizontalHeaderItem(1,new QStandardItem(QStringLiteral("User")));
-	l_model->setHorizontalHeaderItem(2,new QStandardItem(QStringLiteral("Program")));
+	l_model->setHorizontalHeaderItem(0,new QStandardItem(i18n("Pid")));
+	l_model->setHorizontalHeaderItem(1,new QStandardItem(i18n("User")));
+	l_model->setHorizontalHeaderItem(2,new QStandardItem(i18n("Program")));
 	
 	getAllUsers(l_users);
 	while(l_iter.next()){
@@ -142,10 +142,10 @@ void TMonitorDialog::refresh()
 	bool l_onlyRealFiles=ui.onlyRealFiles->checkState()==Qt::Checked;
 	bool l_trackChanges=ui.trackChanges->checkState()==Qt::Checked;
 	QStandardItemModel *l_model =new QStandardItemModel(0,4,this);
-	l_model->setHorizontalHeaderItem(0,new QStandardItem(QStringLiteral("Fd.")));
-	l_model->setHorizontalHeaderItem(1,new QStandardItem(QStringLiteral("Name")));
-	l_model->setHorizontalHeaderItem(2,new QStandardItem(QStringLiteral("Open time")));
-	l_model->setHorizontalHeaderItem(3,new QStandardItem(QStringLiteral("Close time")));
+	l_model->setHorizontalHeaderItem(0,new QStandardItem(i18n("Fd.")));
+	l_model->setHorizontalHeaderItem(1,new QStandardItem(i18n("Name")));
+	l_model->setHorizontalHeaderItem(2,new QStandardItem(i18n("Open time")));
+	l_model->setHorizontalHeaderItem(3,new QStandardItem(i18n("Close time")));
 	TLinkListIterator<TFileLogItem> l_iter(files);
 	int l_cnt=0;
 	TFileLogItem *l_item;

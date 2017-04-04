@@ -132,7 +132,6 @@ void TMainWindow::checkRefresh(int p_state PAR_UNUSED)
 		}
 		if(l_ok){
 			refreshTimer.start(int(l_value*1000));
-			std::cout  <<"Refresh changed" <<std::endl;
 		} else {
 			refreshTimer.stop();
 		}
