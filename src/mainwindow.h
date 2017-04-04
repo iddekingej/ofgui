@@ -27,7 +27,7 @@ private slots:
 	void onlyRealFilesChecked(int p_state);
 	void timeOutChanged();
 	void refresh();
-
+	void openMonitor();
 private:
 	Ui::MainWindow ui;
 	/**

@@ -1,3 +1,4 @@
+
 #include "mainwindow.h"
 #include <QMainWindow>
 #include <QStandardItemModel>
@@ -12,6 +13,7 @@
 #include "linklist.h"
 #include "globals.h"
 #include "os.h"
+#include "monitordialog.h"
 
 /**
  *  Main window constructor
@@ -31,6 +33,7 @@ TMainWindow::TMainWindow(QWidget* p_parent):QMainWindow(p_parent)
 	connect(ui.checkRefresh,SIGNAL(stateChanged(int)),this,SLOT(checkRefresh(int)));	
 	connect(ui.refreshTime,SIGNAL(editingFinished()),this,SLOT(timeOutChanged()));
 	connect(ui.action_Exit,&QAction::triggered,g_app,QApplication::quit);
+	connect(ui.actionMonitor,SIGNAL(triggered()),this,SLOT(openMonitor()));
 	connect(ui.refreshButton,SIGNAL(pressed()),this,SLOT(refresh())); 
 	connect(ui.searchButton,SIGNAL(pressed()),this,SLOT(refresh())); 
 	connect(ui.searchText,SIGNAL(returnPressed()),this,SLOT(refresh()));
@@ -39,6 +42,16 @@ TMainWindow::TMainWindow(QWidget* p_parent):QMainWindow(p_parent)
 	checkRefresh(0);
 	ui.refreshTime->setText("1");
 }
+
+/**
+ * Open monitor dialog
+ */
+void TMainWindow::openMonitor()
+{
+	TMonitorDialog l_dialog;
+	l_dialog.exec();
+}
+
 
 /**
  *  On the main window there is a checkbox "only real files".
