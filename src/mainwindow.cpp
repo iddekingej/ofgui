@@ -14,6 +14,8 @@
 #include "globals.h"
 #include "os.h"
 #include "monitordialog.h"
+#include "about.h"
+#include "utils.h"
 
 /**
  *  Main window constructor
@@ -33,6 +35,7 @@ TMainWindow::TMainWindow(QWidget* p_parent):QMainWindow(p_parent)
 	connect(ui.checkRefresh,SIGNAL(stateChanged(int)),this,SLOT(checkRefresh(int)));	
 	connect(ui.refreshTime,SIGNAL(editingFinished()),this,SLOT(timeOutChanged()));
 	connect(ui.action_Exit,&QAction::triggered,g_app,QApplication::quit);
+	connect(ui.actionAbout,SIGNAL(triggered()),this,SLOT(about()));
 	connect(ui.actionMonitor,SIGNAL(triggered()),this,SLOT(openMonitor()));
 	connect(ui.refreshButton,SIGNAL(pressed()),this,SLOT(refresh())); 
 	connect(ui.searchButton,SIGNAL(pressed()),this,SLOT(refresh())); 
@@ -42,6 +45,18 @@ TMainWindow::TMainWindow(QWidget* p_parent):QMainWindow(p_parent)
 	checkRefresh(0);
 	ui.refreshTime->setText("1");
 }
+
+void TMainWindow::about()
+{
+	TAbout l_dialog;
+	l_dialog.exec();
+}
+
+
+
+/**
+ * Display about dialog
+ */
 
 /**
  * Open monitor dialog
@@ -59,7 +74,7 @@ void TMainWindow::openMonitor()
  *  reflecting the new selection.
  */
 
-void TMainWindow::onlyRealFilesChecked(int p_state)
+void TMainWindow::onlyRealFilesChecked(int p_state PAR_UNUSED)
 {
 	fillOpenFileGrid();
 }
@@ -69,7 +84,7 @@ void TMainWindow::onlyRealFilesChecked(int p_state)
  *  The open file list is refreshed so only the open files of the selected proces are displayed
  */
 
-void TMainWindow::processChanged(int p_index)
+void TMainWindow::processChanged(int p_index PAR_UNUSED)
 {
 	fillOpenFileGrid();	
 }
@@ -104,7 +119,7 @@ void TMainWindow::refresh()
  * \param p_state no used
  */
 
-void TMainWindow::checkRefresh(int p_state)
+void TMainWindow::checkRefresh(int p_state PAR_UNUSED)
 {
 	
 	if(ui.checkRefresh->checkState()==Qt::Checked){

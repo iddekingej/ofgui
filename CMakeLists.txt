@@ -50,6 +50,7 @@ feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAG
 KI18N_WRAP_UI(ofgui_ui_h 
 	ui/main.ui
 	ui/monitor.ui
+	ui/about.ui
 )
 
 qt5_add_resources(ofgui_res_h icons.qrc)
@@ -64,6 +65,7 @@ set(ofgui_SRCS
 	src/filelogitem.cpp
 	src/openfileiterator.cpp
 	src/utils.cpp
+	src/about.cpp
 )
 
 set(ofgui_SRCS ${ofgui_res_h} ${ofgui_SRCS} ${ofgui_ui_h})
@@ -85,18 +87,4 @@ feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
 add_subdirectory(po)
 
-SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Gui for displaying open files")
-SET(CPACK_RPM_PACKAGE_SUMMARY ${CPACK_PACKAGE_DESCRIPTION_SUMMARY})
-SET(CPACK_RPM_PACKAGE_NAME "ofgui")
-SET(CPACK_PACKAGE_VENDOR "iddekingej@lycos.com")
-SET(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/Readme.txt")
-SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/Copyright.txt")
-SET(CPACK_PACKAGE_VERSION_MAJOR "0")
-SET(CPACK_PACKAGE_VERSION_MINOR "1")
-SET(CPACK_PACKAGE_VERSION_PATCH "0")
-SET(CPACK_RPM_PACKAGE_VERSION "1")
-SET(CPACK_RPM_PACKAGE_LICENSE "GPLv2.0")
-SET(CPACK_RPM_PACKAGE_GROUP "Administration")
-SET(CPACK_RPM_PACKAGE_DESCRIPTION ${CPACK_PACKAGE_DESCRIPTION_SUMMARY})
-SET(CPACK_PACKAGE_CONTACT "iddekingej@lycos.com")
-include(CPack)
+

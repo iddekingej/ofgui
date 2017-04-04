@@ -2,3 +2,29 @@ OfGUi-open file gui
 
 This program display open files
 Compiled with KF5/QT5
+
+Building
+--------
+
+Required:
+
+compiler/make
+	c++ (x++11)
+	cmake
+libs(+devel):
+	libQt5Widgets.so.5
+	libKF5CoreAddons.so.5
+	libKF5ConfigCore.so.5
+	libKF5I18n.so.5
+	libQt5Gui.so.5
+	libQt5Core.so.5
+	
+building:
+	goto project root
+	mkdir build
+	cd build
+	cmake ..
+	make
+	
+This program can be installed by running  "make install"  or the program can be directly run from the build folder.  Procgui can be run as a 
+normal user or as a root. 

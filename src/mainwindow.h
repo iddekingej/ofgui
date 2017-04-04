@@ -28,6 +28,7 @@ private slots:
 	void timeOutChanged();
 	void refresh();
 	void openMonitor();
+	void about();
 private:
 	Ui::MainWindow ui;
 	/**
