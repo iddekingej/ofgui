@@ -1,0 +1,165 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://none\n"
+"POT-Creation-Date: 2017-04-04 19:45+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.9\n"
+
+#: build/ui_main.h:215
+msgid "Open files"
+msgstr "Open bestand"
+
+#: build/ui_main.h:216
+msgid "&Exit"
+msgstr "&Stoppen"
+
+#: build/ui_main.h:217
+msgid "Monitor"
+msgstr "Monitor"
+
+#: build/ui_main.h:219
+msgid "Refresh list"
+msgstr "Ververs lijst"
+
+#: build/ui_main.h:222
+msgid "Only real files?"
+msgstr "Alleen echte bestanden?"
+
+#: build/ui_main.h:223
+msgid "refresh "
+msgstr "ververs"
+
+#: build/ui_main.h:224 src/mainwindow.cpp:157 src/monitordialog.cpp:64
+msgid "Program"
+msgstr "Programma"
+
+#: build/ui_main.h:225
+msgid "Search file:"
+msgstr "Zoek bestand:"
+
+#: build/ui_main.h:227
+msgid "Search"
+msgstr "Zoek"
+
+#: build/ui_main.h:230
+msgid "Open files:"
+msgstr "Bestand openen"
+
+#: build/ui_main.h:231
+msgid "&File"
+msgstr "&Bestand"
+
+#: build/ui_main.h:232
+msgid "Tools"
+msgstr "Tools"
+
+#: build/ui_monitor.h:137
+msgid "Dialog"
+msgstr "Dialoog"
+
+#: build/ui_monitor.h:138 src/monitordialog.cpp:100
+msgid "Start"
+msgstr "Start"
+
+#: build/ui_monitor.h:140
+msgid "Track changes"
+msgstr "Wijzigingen bijhouden"
+
+#: build/ui_monitor.h:141
+msgid "Clear changes"
+msgstr "Wijziging markering wissen"
+
+#: build/ui_monitor.h:142
+msgid "Only realfiles"
+msgstr "Alleen echter bestanden"
+
+#: build/ui_monitor.h:143
+msgid "Close"
+msgstr "Sluiten"
+
+#: src/main.cpp:20
+msgid "Open file gui"
+msgstr "Open bestanden GUI"
+
+#: src/main.cpp:22 src/main.cpp:29
+msgid "X"
+msgstr "X"
+
+#: src/main.cpp:24
+msgid "(C) 2017"
+msgstr "(C) 2017"
+
+#: src/main.cpp:25
+msgid "x"
+msgstr "x"
+
+#: src/main.cpp:29
+msgid "Jeroen van Iddekinge"
+msgstr "Jeroen van Iddekinge"
+
+#: src/mainwindow.cpp:158
+msgid "Proces ID"
+msgstr "Proces ID"
+
+#: src/mainwindow.cpp:159
+msgid "Path"
+msgstr "Pad"
+
+#: src/mainwindow.cpp:160 src/monitordialog.cpp:63
+msgid "User"
+msgstr "Gebruiker"
+
+#: src/mainwindow.cpp:164
+msgid "All processes"
+msgstr "Alle processen"
+
+#: src/mainwindow.cpp:210
+msgid "File descr."
+msgstr "Bestandsomschrijving"
+
+#: src/mainwindow.cpp:211
+msgid "File name"
+msgstr "Bestandsnaam"
+
+#: src/mainwindow.cpp:212
+msgid "Prog. id."
+msgstr "{Programma ID"
+
+#: src/mainwindow.cpp:213
+msgid "Prog. name"
+msgstr "Prog. naam"
+
+#: src/mainwindow.cpp:214
+msgid "Proc. owner"
+msgstr "Proc. eigenaar"
+
+#: src/monitordialog.cpp:62
+msgid "Pid"
+msgstr "Pid"
+
+#: src/monitordialog.cpp:108
+msgid "Stop"
+msgstr "Stop"
+
+#: src/monitordialog.cpp:145
+msgid "Fd."
+msgstr "Fd."
+
+#: src/monitordialog.cpp:146
+msgid "Name"
+msgstr "Naam"
+
+#: src/monitordialog.cpp:147
+msgid "Open time"
+msgstr "Open tijdstip"
+
+#: src/monitordialog.cpp:148
+msgid "Close time"
+msgstr "Sluiten tijdstip"
