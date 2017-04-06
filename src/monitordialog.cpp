@@ -172,14 +172,15 @@ void TMonitorDialog::refresh()
 
 
 /**
- * Reread all open files
- * files contains all files (open/closed) and openFiles contain all open files.
+ * Reread all open files.
+ * The "files" property contains all files (open/closed) and the "openFiles" property contains all open files.
  * the data is processed as follows.
- * -Set open check on all open files to false (this will be used later to filter files that aren't open anymore)
- * -Read all open files.
- * -When file not in open file list, make new entry
- * -When file is in open file list, set the "open check". This is used in the next step to filter out closed files
- * -Filter out closed files. All FileLogItems with "open check" is false is removed from the open file list.
+ * -Set "openCheck" property on all open files to false (this will be used later to filter files that aren't open anymore)
+ * -Read all open files, do the followign for all those files:
+ * 	-When the file is not in the "openFile" list, make new entry
+ * 	-Set "openCheck" flag on the files.
+ * -Remove all closed files from the "openFile"  list. Scan all entries in de "openFile". For entries that have "openCheck"  false, 
+ *  remove them from the "openFiles" list.
  * 
  * \param p_id  read open files from this process
  */

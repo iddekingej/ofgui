@@ -46,17 +46,15 @@ TMainWindow::TMainWindow(QWidget* p_parent):QMainWindow(p_parent)
 	ui.refreshTime->setText("1");
 }
 
+/**
+ * Display about dialog
+ */
+
 void TMainWindow::about()
 {
 	TAbout l_dialog;
 	l_dialog.exec();
 }
-
-
-
-/**
- * Display about dialog
- */
 
 /**
  * Open monitor dialog
@@ -70,8 +68,8 @@ void TMainWindow::openMonitor()
 
 /**
  *  On the main window there is a checkbox "only real files".
- *  When the checkbox is toggled this slot is called and the open file list is refresh
- *  reflecting the new selection.
+ *  When the checkbox is toggled this slot is called and the open file list is refreshed.
+ * 
  */
 
 void TMainWindow::onlyRealFilesChecked(int p_state PAR_UNUSED)
@@ -98,7 +96,7 @@ void TMainWindow::timeOutChanged()
 }
 
 /**
- *  Reread all proces and open file information and refreshed the open file list
+ *  Reread all proces and open file information and refresh the open file list
  *  and the process selector.
  */
 
@@ -111,7 +109,7 @@ void TMainWindow::refresh()
 }
 
 /**
- * Event when "Refresh" checbox is checked of unchecked.
+ * Event when "Refresh" checbox is checked or unchecked.
  * When checked an interval input is displayed  and the refresh timer is started
  * When unchecked  the interval input is hidden and the refresh timer is stopped.
  * This routine is also called when refreshTime is change \ref timeOutChanged 
@@ -144,7 +142,7 @@ void TMainWindow::checkRefresh(int p_state PAR_UNUSED)
 /**
  *  On the main Gui there is a selection list with currently running processes.
  *  When a proces is selected, only files used by this proces are displayed
- *  Only files which has open files are added to the selection list.
+ *  Only processes which has open files are added to the selection list.
  * 
  *  This routine fills this list
  */

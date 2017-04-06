@@ -10,9 +10,21 @@
 
 class TProcessIterator
 {
+/**
+ * Directory iterator , used for scanning the /proc folder
+ */
 	QDirIterator *dirIter;
+/**
+ * Current pid  process
+ */
 	long    id;
+/**
+ * Current uid of processs
+ */
 	long    uid;
+/**
+ * Executable file of process
+ */
 	QString exe;	
 public:
 	inline const QString getFilePath(){ return dirIter->filePath();}
