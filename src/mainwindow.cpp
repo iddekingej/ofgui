@@ -153,9 +153,10 @@ void TMainWindow::setProgramSelector()
 	TLinkListIterator<TProcess> l_procIter(processList.getPrograms());
 	QStandardItemModel *l_model=new QStandardItemModel(0,4,this);
 	l_model->setHorizontalHeaderItem(0,new QStandardItem(i18n("Program")));
-	l_model->setHorizontalHeaderItem(1,new QStandardItem(i18n("Proces ID")));
-	l_model->setHorizontalHeaderItem(2,new QStandardItem(i18n("Path")));
-	l_model->setHorizontalHeaderItem(3,new QStandardItem(i18n("User")));
+	l_model->setHorizontalHeaderItem(1,new QStandardItem(i18n("Path")));
+	l_model->setHorizontalHeaderItem(2,new QStandardItem(i18n("User")));
+	l_model->setHorizontalHeaderItem(3,new QStandardItem(i18n("Proces ID")));
+
 	QStandardItem *l_item;	
 	QString l_path;
 	int l_cnt=1;
@@ -176,10 +177,11 @@ void TMainWindow::setProgramSelector()
 			if(l_process->getId()==l_selectedId){
 				l_selectedIdx=l_cnt;
 			}
-			l_model->setItem(l_cnt,1,new QStandardItem(QString::number(l_process->getId())));
 			l_model->setItem(l_cnt,0,l_item);
-			l_model->setItem(l_cnt,2,new QStandardItem(l_info.filePath()));
-			l_model->setItem(l_cnt,3,new QStandardItem(l_process->getOwner()));
+			l_model->setItem(l_cnt,1,new QStandardItem(QFileInfo(l_info.filePath()).path()));
+			l_model->setItem(l_cnt,2,new QStandardItem(l_process->getOwner()));
+			l_model->setItem(l_cnt,3,new QStandardItem(QString::number(l_process->getId())));			
+			
 			l_cnt++;
 		}
 		
