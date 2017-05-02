@@ -3,6 +3,7 @@
 #include <QCommandLineParser>
 #include <KAboutData>
 #include "mainwindow.h"
+#include "version.h"
 
 QApplication *g_app;
 
@@ -18,7 +19,7 @@ int main(int argc, char **argv) {
 	KAboutData l_aboutData(
 			"ofgui"
 		,	i18n("Open file gui")
-		,	"0.1"
+		,	VERSION
 		,	i18n("X")
 		,	KAboutLicense::GPL
 		,	i18n("(C) 2017")

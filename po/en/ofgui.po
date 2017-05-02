@@ -1,0 +1,151 @@
+#: build/ui_main.h:215
+msgid "Open files"
+msgstr ""
+
+#: build/ui_main.h:216
+msgid "&Exit"
+msgstr "&Exit"
+
+#: build/ui_main.h:217
+msgid "Monitor"
+msgstr ""
+
+#: build/ui_main.h:219
+msgid "Refresh list"
+msgstr ""
+
+#: build/ui_main.h:222
+msgid "Only real files?"
+msgstr ""
+
+#: build/ui_main.h:223
+msgid "refresh "
+msgstr ""
+
+#: build/ui_main.h:224 src/mainwindow.cpp:157 src/monitordialog.cpp:64
+msgid "Program"
+msgstr ""
+
+#: build/ui_main.h:225
+msgid "Search file:"
+msgstr ""
+
+#: build/ui_main.h:227
+msgid "Search"
+msgstr ""
+
+#: build/ui_main.h:230
+msgid "Open files:"
+msgstr ""
+
+#: build/ui_main.h:231
+msgid "&File"
+msgstr ""
+
+#: build/ui_main.h:232
+msgid "Tools"
+msgstr ""
+
+#: build/ui_monitor.h:137
+msgid "Dialog"
+msgstr ""
+
+#: build/ui_monitor.h:138 src/monitordialog.cpp:100
+msgid "Start"
+msgstr ""
+
+#: build/ui_monitor.h:140
+msgid "Track changes"
+msgstr ""
+
+#: build/ui_monitor.h:141
+msgid "Clear changes"
+msgstr ""
+
+#: build/ui_monitor.h:142
+msgid "Only realfiles"
+msgstr ""
+
+#: build/ui_monitor.h:143
+msgid "Close"
+msgstr ""
+
+#: src/main.cpp:20
+msgid "Open file gui"
+msgstr ""
+
+#: src/main.cpp:22 src/main.cpp:29
+msgid "X"
+msgstr ""
+
+#: src/main.cpp:24
+msgid "(C) 2017"
+msgstr ""
+
+#: src/main.cpp:25
+msgid "x"
+msgstr ""
+
+#: src/main.cpp:29
+msgid "Jeroen van Iddekinge"
+msgstr ""
+
+#: src/mainwindow.cpp:158
+msgid "Proces ID"
+msgstr ""
+
+#: src/mainwindow.cpp:159
+msgid "Path"
+msgstr ""
+
+#: src/mainwindow.cpp:160 src/monitordialog.cpp:63
+msgid "User"
+msgstr ""
+
+#: src/mainwindow.cpp:164
+msgid "All processes"
+msgstr ""
+
+#: src/mainwindow.cpp:210
+msgid "File descr."
+msgstr ""
+
+#: src/mainwindow.cpp:211
+msgid "File name"
+msgstr ""
+
+#: src/mainwindow.cpp:212
+msgid "Prog. id."
+msgstr ""
+
+#: src/mainwindow.cpp:213
+msgid "Prog. name"
+msgstr ""
+
+#: src/mainwindow.cpp:214
+msgid "Proc. owner"
+msgstr ""
+
+#: src/monitordialog.cpp:62
+msgid "Pid"
+msgstr ""
+
+#: src/monitordialog.cpp:108
+msgid "Stop"
+msgstr ""
+
+#: src/monitordialog.cpp:145
+msgid "Fd."
+msgstr ""
+
+#: src/monitordialog.cpp:146
+msgid "Name"
+msgstr ""
+
+#: src/monitordialog.cpp:147
+msgid "Open time"
+msgstr ""
+
+#: src/monitordialog.cpp:148
+msgid "Close time"
+msgstr ""

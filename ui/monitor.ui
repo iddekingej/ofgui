@@ -80,7 +80,7 @@
      <item>
       <widget class="QCheckBox" name="onlyRealFiles">
        <property name="text">
-        <string>Only realfiles</string>
+        <string>Only real files</string>
        </property>
       </widget>
      </item>
