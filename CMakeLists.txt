@@ -35,6 +35,7 @@ KI18N_WRAP_UI(ofgui_ui_h
 	ui/main.ui
 	ui/monitor.ui
 	ui/about.ui
+	ui/fileinfo.ui
 )
 
 qt5_add_resources(ofgui_res_h icons.qrc)
@@ -50,6 +51,7 @@ set(ofgui_SRCS
 	src/openfileiterator.cpp
 	src/utils.cpp
 	src/about.cpp
+	src/fileinfo.cpp
 )
 
 set(ofgui_SRCS ${ofgui_res_h} ${ofgui_SRCS} ${ofgui_ui_h})

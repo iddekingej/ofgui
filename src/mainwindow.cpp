@@ -16,6 +16,7 @@
 #include "monitordialog.h"
 #include "about.h"
 #include "utils.h"
+#include "fileinfo.h"
 
 /**
  *  Main window constructor
@@ -41,6 +42,7 @@ TMainWindow::TMainWindow(QWidget* p_parent):QMainWindow(p_parent)
 	connect(ui.searchButton,SIGNAL(pressed()),this,SLOT(refresh())); 
 	connect(ui.searchText,SIGNAL(returnPressed()),this,SLOT(refresh()));
 	connect(&refreshTimer,SIGNAL(timeout()),this,SLOT(refresh()));
+	connect(ui.openFileList,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedGrid(const QModelIndex)));
 	refresh();
 	checkRefresh(0);
 	ui.refreshTime->setText("1");
@@ -65,6 +67,13 @@ void TMainWindow::openMonitor()
 	l_dialog.exec();
 }
 
+void TMainWindow::doubleClickedGrid(const QModelIndex& p_index)
+{
+		QString l_name;
+		l_name=p_index.sibling(p_index.row() ,1).data(Qt::DisplayRole).toString();
+		TFileInfo l_info(l_name);
+		l_info.exec();
+}
 
 /**
  *  On the main window there is a checkbox "only real files".

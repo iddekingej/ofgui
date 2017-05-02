@@ -23,6 +23,7 @@ class TMainWindow:public QMainWindow
 	Q_OBJECT
 private slots:
 	void checkRefresh(int p_state);
+	void doubleClickedGrid(const QModelIndex &p_index);
 	void processChanged(int p_index);
 	void onlyRealFilesChecked(int p_state);
 	void timeOutChanged();
