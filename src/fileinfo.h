@@ -6,7 +6,8 @@
 #include "ui_fileinfo.h"
 class TFileInfo:public QDialog{
 	Q_OBJECT
-
+private slots:
+	void fillData();
 private:
 	QString fileName;
 	Ui::fileInfo ui;

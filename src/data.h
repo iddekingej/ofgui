@@ -115,4 +115,5 @@ public:
 	void processInfo();
 };
 
+TLinkList<TProcess> *processesByFile(const QString& p_fileName);
 #endif

@@ -3,5 +3,6 @@
  <qresource>
      <file>icons/refresh.png</file>
      <file>icons/search.png</file> 
+     <file>icons/details.png</file> 
  </qresource>
 </RCC>

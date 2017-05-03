@@ -17,7 +17,7 @@
 #include "about.h"
 #include "utils.h"
 #include "fileinfo.h"
-
+#include <QMessageBox>
 /**
  *  Main window constructor
  *  Setup the window gui and the gui events
@@ -43,6 +43,7 @@ TMainWindow::TMainWindow(QWidget* p_parent):QMainWindow(p_parent)
 	connect(ui.searchText,SIGNAL(returnPressed()),this,SLOT(refresh()));
 	connect(&refreshTimer,SIGNAL(timeout()),this,SLOT(refresh()));
 	connect(ui.openFileList,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedGrid(const QModelIndex)));
+	connect(ui.detailsButton,SIGNAL(pressed()),this,SLOT(detailsInfo()));
 	refresh();
 	checkRefresh(0);
 	ui.refreshTime->setText("1");
@@ -201,6 +202,21 @@ void TMainWindow::setProgramSelector()
 	processSelection->resizeColumnsToContents();
 	processSelection->resizeRowsToContents();
 	ui.processSelection->blockSignals(false);
+}
+
+
+void TMainWindow::detailsInfo()
+{
+	QModelIndexList l_list=ui.openFileList->selectionModel()->selectedRows();
+	if(l_list.length() > 0){
+		QModelIndex l_index=l_list.first();
+		doubleClickedGrid(l_index);
+	} else {
+		QMessageBox l_box;
+		l_box.setText(i18n("Please select a file first"));
+		l_box.setStandardButtons(QMessageBox::Ok);		
+		l_box.exec();	
+	}
 }
 
 

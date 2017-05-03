@@ -105,5 +105,34 @@ void TProcessList::processInfo()
 	}
 }
 
+static bool processHasFile(const QString &p_path,const QString &p_fileName)
+{
+	TOpenFileIterator l_iter(p_path+"/fd/");
+	while(l_iter.next()){
+			if(l_iter.getFileName().trimmed()==p_fileName.trimmed()){
+				return true;
+			}
+	}
+	return false;
+}
+
+TLinkList<TProcess> *processesByFile(const QString& p_fileName)
+{
+	TProcessIterator l_iter;
+	TProcess *l_program;
+	QMap<uint,QString> l_users;
+	TLinkList<TProcess> *l_processes=new TLinkList<TProcess>();
+	getAllUsers(l_users);
+	while(l_iter.next()){
+		if(processHasFile(l_iter.getFilePath(),p_fileName)){
+			l_program=new TProcess(l_iter.getId(),l_iter.getExe());
+			l_program->setOwnerId(l_iter.getUid());
+			l_program->setOwner(l_users.value(l_iter.getUid()));
+			l_processes->append(l_program);
+		}
+	}
+	return l_processes;
+}
+
 
 
