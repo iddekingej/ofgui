@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://none\n"
-"POT-Creation-Date: 2017-04-04 19:45+0200\n"
+"POT-Creation-Date: 2017-05-03 17:52+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -12,53 +12,145 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.9\n"
 
-#: build/ui_main.h:215
+#: build/ui_about.h:122 build/ui_main.h:226
+msgid "About"
+msgstr "Over"
+
+#: build/ui_about.h:123
+msgid "Open file GUI"
+msgstr "Open bestanden GUI"
+
+#: build/ui_about.h:124
+msgid "Version:"
+msgstr "Versie:"
+
+#: build/ui_about.h:125
+msgid "none"
+msgstr "geen"
+
+#: build/ui_about.h:126
+msgid "(C) 2017  Jeroen van Iddekinge"
+msgstr "(C) 2017 Jeroen van Iddekinge"
+
+#: build/ui_about.h:127
+msgid "License: Gpl v2"
+msgstr "Licentie: Gpl v2"
+
+#: build/ui_about.h:128 build/ui_monitor.h:143
+msgid "Close"
+msgstr "Sluiten"
+
+#: build/ui_fileinfo.h:211
+msgid "File information"
+msgstr "Bestandsinformatie"
+
+#: build/ui_fileinfo.h:212 src/mainwindow.cpp:236
+msgid "File name"
+msgstr "Bestandsnaam"
+
+#: build/ui_fileinfo.h:213 build/ui_fileinfo.h:215 build/ui_fileinfo.h:217
+#: build/ui_fileinfo.h:220 build/ui_fileinfo.h:222 build/ui_fileinfo.h:224
+#: build/ui_fileinfo.h:226 build/ui_fileinfo.h:228 build/ui_fileinfo.h:230
+#: build/ui_fileinfo.h:232
+msgid "TextLabel"
+msgstr "Textlabel"
+
+#: build/ui_fileinfo.h:214
+msgid "Exists?"
+msgstr "Bestaat?"
+
+#: build/ui_fileinfo.h:216
+msgid "Omvang "
+msgstr "Omvang"
+
+#: build/ui_fileinfo.h:218
+msgid "Bytes"
+msgstr "Bytes"
+
+#: build/ui_fileinfo.h:219
+msgid "="
+msgstr "="
+
+#: build/ui_fileinfo.h:221 src/fileinfo.cpp:34
+msgid "Owner"
+msgstr "Eigenaar"
+
+#: build/ui_fileinfo.h:223
+msgid "Group"
+msgstr "Groep"
+
+#: build/ui_fileinfo.h:225
+msgid "Is readble"
+msgstr "Is leesbaar"
+
+#: build/ui_fileinfo.h:227
+msgid "Is writeable"
+msgstr "Is schrijfbaar"
+
+#: build/ui_fileinfo.h:229
+msgid "Created at"
+msgstr "Aangemaakt op"
+
+#: build/ui_fileinfo.h:231
+msgid "Last changed"
+msgstr "Laatste wijziging"
+
+#: build/ui_fileinfo.h:233
+msgid "Ok"
+msgstr "Ok"
+
+#: build/ui_main.h:223
 msgid "Open files"
 msgstr "Open bestand"
 
-#: build/ui_main.h:216
+#: build/ui_main.h:224
 msgid "&Exit"
 msgstr "&Stoppen"
 
-#: build/ui_main.h:217
-msgid "Monitor"
-msgstr "Monitor"
+#: build/ui_main.h:225
+msgid "&Monitor"
+msgstr "&Monitor"
 
-#: build/ui_main.h:219
+#: build/ui_main.h:228
 msgid "Refresh list"
 msgstr "Ververs lijst"
 
-#: build/ui_main.h:222
+#: build/ui_main.h:231
 msgid "Only real files?"
 msgstr "Alleen echte bestanden?"
 
-#: build/ui_main.h:223
+#: build/ui_main.h:232
 msgid "refresh "
 msgstr "ververs"
 
-#: build/ui_main.h:224 src/mainwindow.cpp:157 src/monitordialog.cpp:64
+#: build/ui_main.h:233 src/fileinfo.cpp:33 src/mainwindow.cpp:165
+#: src/monitordialog.cpp:64
 msgid "Program"
 msgstr "Programma"
 
-#: build/ui_main.h:225
+#: build/ui_main.h:234
 msgid "Search file:"
 msgstr "Zoek bestand:"
 
-#: build/ui_main.h:227
+#: build/ui_main.h:236
 msgid "Search"
 msgstr "Zoek"
 
-#: build/ui_main.h:230
+#: build/ui_main.h:239
 msgid "Open files:"
 msgstr "Bestand openen"
 
-#: build/ui_main.h:231
+#: build/ui_main.h:240
 msgid "&File"
 msgstr "&Bestand"
 
-#: build/ui_main.h:232
-msgid "Tools"
-msgstr "Tools"
+#: build/ui_main.h:241
+msgid "&Tools"
+msgstr "&Tools"
+
+#: build/ui_main.h:242
+msgid "Help"
+msgstr "Help"
 
 #: build/ui_monitor.h:137
 msgid "Dialog"
@@ -77,72 +169,84 @@ msgid "Clear changes"
 msgstr "Wijziging markering wissen"
 
 #: build/ui_monitor.h:142
-msgid "Only realfiles"
-msgstr "Alleen echter bestanden"
+msgid "Only real files"
+msgstr "Alleen echte bestanden?"
 
-#: build/ui_monitor.h:143
-msgid "Close"
-msgstr "Sluiten"
+#: src/fileinfo.cpp:22
+msgid "FIle exists"
+msgstr "Bestand bestaat"
 
-#: src/main.cpp:20
+#: src/fileinfo.cpp:22
+msgid "File doesn't exists"
+msgstr "Bestand bestaat niet"
+
+#: src/fileinfo.cpp:27 src/fileinfo.cpp:28
+msgid "Yes"
+msgstr "Ja"
+
+#: src/fileinfo.cpp:27 src/fileinfo.cpp:28
+msgid "No"
+msgstr "Nee"
+
+#: src/fileinfo.cpp:32 src/monitordialog.cpp:62
+msgid "Pid"
+msgstr "Pid"
+
+#: src/main.cpp:21
 msgid "Open file gui"
 msgstr "Open bestanden GUI"
 
-#: src/main.cpp:22 src/main.cpp:29
+#: src/main.cpp:23 src/main.cpp:30
 msgid "X"
 msgstr "X"
 
-#: src/main.cpp:24
+#: src/main.cpp:25
 msgid "(C) 2017"
 msgstr "(C) 2017"
 
-#: src/main.cpp:25
+#: src/main.cpp:26
 msgid "x"
 msgstr "x"
 
-#: src/main.cpp:29
+#: src/main.cpp:30
 msgid "Jeroen van Iddekinge"
 msgstr "Jeroen van Iddekinge"
 
-#: src/mainwindow.cpp:158
-msgid "Proces ID"
-msgstr "Proces ID"
-
-#: src/mainwindow.cpp:159
+#: src/mainwindow.cpp:166
 msgid "Path"
 msgstr "Pad"
 
-#: src/mainwindow.cpp:160 src/monitordialog.cpp:63
+#: src/mainwindow.cpp:167 src/monitordialog.cpp:63
 msgid "User"
 msgstr "Gebruiker"
 
-#: src/mainwindow.cpp:164
+#: src/mainwindow.cpp:168
+msgid "Proces ID"
+msgstr "Proces ID"
+
+#: src/mainwindow.cpp:173
 msgid "All processes"
 msgstr "Alle processen"
 
-#: src/mainwindow.cpp:210
+#: src/mainwindow.cpp:216
+msgid "Please select a file first"
+msgstr "Selecteer eerst een bestand a.u.b."
+
+#: src/mainwindow.cpp:235
 msgid "File descr."
 msgstr "Bestandsomschrijving"
 
-#: src/mainwindow.cpp:211
-msgid "File name"
-msgstr "Bestandsnaam"
-
-#: src/mainwindow.cpp:212
+#: src/mainwindow.cpp:237
 msgid "Prog. id."
 msgstr "{Programma ID"
 
-#: src/mainwindow.cpp:213
+#: src/mainwindow.cpp:238
 msgid "Prog. name"
 msgstr "Prog. naam"
 
-#: src/mainwindow.cpp:214
+#: src/mainwindow.cpp:239
 msgid "Proc. owner"
 msgstr "Proc. eigenaar"
-
-#: src/monitordialog.cpp:62
-msgid "Pid"
-msgstr "Pid"
 
 #: src/monitordialog.cpp:108
 msgid "Stop"
@@ -163,3 +267,6 @@ msgstr "Open tijdstip"
 #: src/monitordialog.cpp:148
 msgid "Close time"
 msgstr "Sluiten tijdstip"
+
+#~ msgid "Only realfiles"
+#~ msgstr "Alleen echter bestanden"

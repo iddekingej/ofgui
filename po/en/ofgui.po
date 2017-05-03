@@ -1,49 +1,141 @@
-#: build/ui_main.h:215
-msgid "Open files"
+#: build/ui_about.h:122 build/ui_main.h:226
+msgid "About"
 msgstr ""
 
-#: build/ui_main.h:216
-msgid "&Exit"
-msgstr "&Exit"
-
-#: build/ui_main.h:217
-msgid "Monitor"
+#: build/ui_about.h:123
+msgid "Open file GUI"
 msgstr ""
 
-#: build/ui_main.h:219
-msgid "Refresh list"
+#: build/ui_about.h:124
+msgid "Version:"
 msgstr ""
 
-#: build/ui_main.h:222
-msgid "Only real files?"
+#: build/ui_about.h:125
+msgid "none"
+msgstr ""
+
+#: build/ui_about.h:126
+msgid "(C) 2017  Jeroen van Iddekinge"
+msgstr ""
+
+#: build/ui_about.h:127
+msgid "License: Gpl v2"
+msgstr ""
+
+#: build/ui_about.h:128 build/ui_monitor.h:143
+msgid "Close"
+msgstr ""
+
+#: build/ui_fileinfo.h:211
+msgid "File information"
+msgstr ""
+
+#: build/ui_fileinfo.h:212 src/mainwindow.cpp:236
+msgid "File name"
+msgstr ""
+
+#: build/ui_fileinfo.h:213 build/ui_fileinfo.h:215 build/ui_fileinfo.h:217
+#: build/ui_fileinfo.h:220 build/ui_fileinfo.h:222 build/ui_fileinfo.h:224
+#: build/ui_fileinfo.h:226 build/ui_fileinfo.h:228 build/ui_fileinfo.h:230
+#: build/ui_fileinfo.h:232
+msgid "TextLabel"
+msgstr ""
+
+#: build/ui_fileinfo.h:214
+msgid "Exists?"
+msgstr ""
+
+#: build/ui_fileinfo.h:216
+msgid "Omvang "
+msgstr ""
+
+#: build/ui_fileinfo.h:218
+msgid "Bytes"
+msgstr ""
+
+#: build/ui_fileinfo.h:219
+msgid "="
+msgstr ""
+
+#: build/ui_fileinfo.h:221 src/fileinfo.cpp:34
+msgid "Owner"
+msgstr ""
+
+#: build/ui_fileinfo.h:223
+msgid "Group"
+msgstr ""
+
+#: build/ui_fileinfo.h:225
+msgid "Is readble"
+msgstr ""
+
+#: build/ui_fileinfo.h:227
+msgid "Is writeable"
+msgstr ""
+
+#: build/ui_fileinfo.h:229
+msgid "Created at"
+msgstr ""
+
+#: build/ui_fileinfo.h:231
+msgid "Last changed"
+msgstr ""
+
+#: build/ui_fileinfo.h:233
+msgid "Ok"
 msgstr ""
 
 #: build/ui_main.h:223
-msgid "refresh "
+msgid "Open files"
 msgstr ""
 
-#: build/ui_main.h:224 src/mainwindow.cpp:157 src/monitordialog.cpp:64
-msgid "Program"
-msgstr ""
+#: build/ui_main.h:224
+msgid "&Exit"
+msgstr "&Exit"
 
 #: build/ui_main.h:225
-msgid "Search file:"
+msgid "&Monitor"
 msgstr ""
 
-#: build/ui_main.h:227
-msgid "Search"
-msgstr ""
-
-#: build/ui_main.h:230
-msgid "Open files:"
+#: build/ui_main.h:228
+msgid "Refresh list"
 msgstr ""
 
 #: build/ui_main.h:231
-msgid "&File"
+msgid "Only real files?"
 msgstr ""
 
 #: build/ui_main.h:232
-msgid "Tools"
+msgid "refresh "
+msgstr ""
+
+#: build/ui_main.h:233 src/fileinfo.cpp:33 src/mainwindow.cpp:165
+#: src/monitordialog.cpp:64
+msgid "Program"
+msgstr ""
+
+#: build/ui_main.h:234
+msgid "Search file:"
+msgstr ""
+
+#: build/ui_main.h:236
+msgid "Search"
+msgstr ""
+
+#: build/ui_main.h:239
+msgid "Open files:"
+msgstr ""
+
+#: build/ui_main.h:240
+msgid "&File"
+msgstr ""
+
+#: build/ui_main.h:241
+msgid "&Tools"
+msgstr ""
+
+#: build/ui_main.h:242
+msgid "Help"
 msgstr ""
 
 #: build/ui_monitor.h:137
@@ -63,71 +155,83 @@ msgid "Clear changes"
 msgstr ""
 
 #: build/ui_monitor.h:142
-msgid "Only realfiles"
+msgid "Only real files"
 msgstr ""
 
-#: build/ui_monitor.h:143
-msgid "Close"
+#: src/fileinfo.cpp:22
+msgid "FIle exists"
 msgstr ""
 
-#: src/main.cpp:20
+#: src/fileinfo.cpp:22
+msgid "File doesn't exists"
+msgstr ""
+
+#: src/fileinfo.cpp:27 src/fileinfo.cpp:28
+msgid "Yes"
+msgstr ""
+
+#: src/fileinfo.cpp:27 src/fileinfo.cpp:28
+msgid "No"
+msgstr ""
+
+#: src/fileinfo.cpp:32 src/monitordialog.cpp:62
+msgid "Pid"
+msgstr ""
+
+#: src/main.cpp:21
 msgid "Open file gui"
 msgstr ""
 
-#: src/main.cpp:22 src/main.cpp:29
+#: src/main.cpp:23 src/main.cpp:30
 msgid "X"
 msgstr ""
 
-#: src/main.cpp:24
+#: src/main.cpp:25
 msgid "(C) 2017"
 msgstr ""
 
-#: src/main.cpp:25
+#: src/main.cpp:26
 msgid "x"
 msgstr ""
 
-#: src/main.cpp:29
+#: src/main.cpp:30
 msgid "Jeroen van Iddekinge"
 msgstr ""
 
-#: src/mainwindow.cpp:158
-msgid "Proces ID"
-msgstr ""
-
-#: src/mainwindow.cpp:159
+#: src/mainwindow.cpp:166
 msgid "Path"
 msgstr ""
 
-#: src/mainwindow.cpp:160 src/monitordialog.cpp:63
+#: src/mainwindow.cpp:167 src/monitordialog.cpp:63
 msgid "User"
 msgstr ""
 
-#: src/mainwindow.cpp:164
+#: src/mainwindow.cpp:168
+msgid "Proces ID"
+msgstr ""
+
+#: src/mainwindow.cpp:173
 msgid "All processes"
 msgstr ""
 
-#: src/mainwindow.cpp:210
+#: src/mainwindow.cpp:216
+msgid "Please select a file first"
+msgstr ""
+
+#: src/mainwindow.cpp:235
 msgid "File descr."
 msgstr ""
 
-#: src/mainwindow.cpp:211
-msgid "File name"
-msgstr ""
-
-#: src/mainwindow.cpp:212
+#: src/mainwindow.cpp:237
 msgid "Prog. id."
 msgstr ""
 
-#: src/mainwindow.cpp:213
+#: src/mainwindow.cpp:238
 msgid "Prog. name"
 msgstr ""
 
-#: src/mainwindow.cpp:214
+#: src/mainwindow.cpp:239
 msgid "Proc. owner"
-msgstr ""
-
-#: src/monitordialog.cpp:62
-msgid "Pid"
 msgstr ""
 
 #: src/monitordialog.cpp:108
