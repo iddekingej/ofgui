@@ -75,7 +75,9 @@ void TProcessList::processOpenFiles(const QString &p_path,TProcess *p_process)
 	while(l_iter.next()){
 		l_file=l_iter.getFileName();
 		l_openFile=new TOpenFile(l_iter.getRealFile(),p_process,l_iter.getFd(),l_file);
+		l_openFile->setFileType(getFileType(l_file));
 		openFiles.append(l_openFile);
+		
 		p_process->addOpenFile(l_openFile);
 
 	}

@@ -21,7 +21,7 @@
 #include <QList>
 #include <QMap>
 #include "linklist.h"
-
+#include "os.h"
 class TOpenFile;
 
 /**
@@ -51,6 +51,7 @@ private:
  *Program name of process
  */	
 	QString programName;
+	
 public:
 	TProcess(long p_id,const QString &p_programName);
 	inline bool hasOpenFile(){ return !openFiles.isEmpty();}
@@ -60,6 +61,7 @@ public:
 	inline void setOwnerId(long p_ownerId){ ownerId=p_ownerId;}
 	inline long getOwnerId(){ return ownerId;}
 	inline void setOwner(const QString &p_owner){ owner=p_owner;}
+	
 	inline const QString &getOwner(){ return owner;}
 	void addOpenFile(TOpenFile *p_openFile);
 };
@@ -91,12 +93,21 @@ private:
  * 
  */
 	bool     realFile;
+/**
+ * File type;
+ */
+	TFileType fileType;
 public:
 	inline TProcess *getProcess(){ return process;}
 	inline long getFd(){ return fd;}
 	inline const QString &getFileName(){ return fileName;}
 	inline bool getRealFile(){return realFile;}
 	TOpenFile(bool p_realFile,TProcess *p_process,long p_fd,const QString &p_fileName);
+	inline   TFileType getFileType(){ return fileType;}
+	inline void setFileType(TFileType p_fileType){ fileType=p_fileType;}
+	inline void getFileTypeStr(QString &p_fileTypeStr){
+		p_fileTypeStr=fileTypeStr(fileType);
+	}
 };
 
 

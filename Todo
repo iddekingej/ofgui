@@ -1,0 +1,10 @@
+Version 2.0
+============================
+* File open details
+  - File information [Done]
+  - Other exe that uses the file [Done]
+  - Hide file information for "other type" file
+* Better file type selection
+* Add file type column
+* Testing
+* Sorting process selection list by program name
