@@ -196,11 +196,13 @@ void TMainWindow::setProgramSelector()
 		}
 		
 	}
+	l_model->sort(0,Qt::AscendingOrder);
 	ui.processSelection->setModel(l_model);	
 	ui.processSelection->setModelColumn(0);
 	ui.processSelection->setCurrentIndex(l_selectedIdx);
 	processSelection->resizeColumnsToContents();
 	processSelection->resizeRowsToContents();
+	
 	ui.processSelection->blockSignals(false);
 }
 
@@ -234,11 +236,11 @@ void TMainWindow::fillOpenFileGrid()
 	bool l_onlyRealFiles=(ui.onlyRealFiles->checkState()==Qt::Checked);
 	l_model->setHorizontalHeaderItem(0,new QStandardItem(i18n("File descr.")));
 	l_model->setHorizontalHeaderItem(1,new QStandardItem(i18n("File name")));
-	l_model->setHorizontalHeaderItem(2,new QStandardItem(i18n("File Type")));
-
-	l_model->setHorizontalHeaderItem(3,new QStandardItem(i18n("Prog. id.")));
-	l_model->setHorizontalHeaderItem(4,new QStandardItem(i18n("Prog. name")));
-	l_model->setHorizontalHeaderItem(5,new QStandardItem(i18n("Proc. owner")));
+	l_model->setHorizontalHeaderItem(2,new QStandardItem(i18n("Open mode")));
+	l_model->setHorizontalHeaderItem(3,new QStandardItem(i18n("File Type")));
+	l_model->setHorizontalHeaderItem(4,new QStandardItem(i18n("Prog. id.")));
+	l_model->setHorizontalHeaderItem(5,new QStandardItem(i18n("Prog. name")));
+	l_model->setHorizontalHeaderItem(6,new QStandardItem(i18n("Proc. owner")));
 	QString l_searchText=ui.searchText->text();
 	TOpenFile *l_openFile;
 	while (l_ofIter.hasNext()){
@@ -251,10 +253,11 @@ void TMainWindow::fillOpenFileGrid()
 			l_openFile->getFileTypeStr(l_fileType);
 			l_model->setItem(l_cnt,0,new QStandardItem(QString::number(l_openFile->getFd())));
 			l_model->setItem(l_cnt,1,new QStandardItem(l_openFile->getFileName()));
-			l_model->setItem(l_cnt,2,new QStandardItem(l_fileType));
-			l_model->setItem(l_cnt,3,new QStandardItem(QString::number(l_openFile->getProcess()->getId())));
-			l_model->setItem(l_cnt,4,new QStandardItem(l_openFile->getProcess()->getProgramName()));
-			l_model->setItem(l_cnt,5,new QStandardItem(l_openFile->getProcess()->getOwner()));
+			l_model->setItem(l_cnt,2,new QStandardItem(l_openFile->getOpenModeDescription()));
+			l_model->setItem(l_cnt,3,new QStandardItem(l_fileType));
+			l_model->setItem(l_cnt,4,new QStandardItem(QString::number(l_openFile->getProcess()->getId())));
+			l_model->setItem(l_cnt,5,new QStandardItem(l_openFile->getProcess()->getProgramName()));
+			l_model->setItem(l_cnt,6,new QStandardItem(l_openFile->getProcess()->getOwner()));
 			l_cnt++;
 
 		}		

@@ -21,11 +21,13 @@ typedef enum{
 ,	DT_SOCKET
 ,	DT_FAILED
 ,       DT_LINK
+,	DT_PIPE
+,       DT_OTHER
 ,	DT_UNKOWN
 } TFileType;
 
-TFileType getFileType(const QString p_fileName);
-const char *fileTypeStr(TFileType p_type);
+TFileType getOSFileType(const QString p_fileName);
+QString fileTypeStr(TFileType p_type);
 
 QString getUsernameById(uint p_uid);
 void getAllUsers(QMap<uint,QString> &p_userList);

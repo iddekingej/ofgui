@@ -1,3 +1,4 @@
+
 /**
  *  data.h
  *  Part of ofgui.h
@@ -14,6 +15,7 @@
 #include <pwd.h>
 #include <QMap>
 #include <QString>
+#include <KLocalizedString>
 #include "utils.h"
 /** 
  * Get user name of the user by the user id
@@ -52,7 +54,7 @@ void getAllUsers(QMap<uint,QString> &p_userList)
 }
 
 
-TFileType getFileType(const QString p_fileName){
+TFileType getOSFileType(const QString p_fileName){
 	struct stat l_info;
 	int l_status=stat(qstr(p_fileName),&l_info);
 	if(l_status != 0){
@@ -72,19 +74,21 @@ TFileType getFileType(const QString p_fileName){
 	}
 }
 
-const char *fileTypeStr(TFileType p_type)
+QString fileTypeStr(TFileType p_type)
 {
 	switch(p_type){
-		case DT_SOCKET : return "Socket";
-		case DT_LINK   : return "Link";
-		case DT_FILE   : return "File";
-		case DT_BLOCK_DEVICE : return "Block device";
-		case DT_DIR          : return "Directory";
-		case DT_CHARACTER_DEVICE : return "Character device";
-		case DT_FIFO             : return "Fifo";
-		case DT_FAILED           : return "Failed";
+		case DT_SOCKET           : return i18n("Socket");
+		case DT_LINK             : return i18n("Link");
+		case DT_FILE             : return i18n("File");
+		case DT_BLOCK_DEVICE     : return i18n("Block device");
+		case DT_DIR              : return i18n("Directory");
+		case DT_CHARACTER_DEVICE : return i18n("Character device");
+		case DT_FIFO             : return i18n("Fifo");
+		case DT_FAILED           : return i18n("Failed");
+		case DT_PIPE             : return i18n("Pipe");
+		case DT_UNKOWN           : return i18n("Unkown");
 		default:
-			return "Unkown";
+			return i18n("Unkown");
 	}
 	
 }

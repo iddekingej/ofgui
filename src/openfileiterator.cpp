@@ -13,7 +13,10 @@ bool TOpenFileIterator::next()
 		fd=fileIter->fileName().toLong(&l_ok);
 		if(l_ok){
 			fileName=QFile(fileIter->filePath()).symLinkTarget();
-			if(fileName.startsWith(path)){ //Hack to distinguish between normal and 
+			if(fileName.startsWith("/memfd:")){
+				fileName=QFileInfo(fileName).fileName();
+				realFile=false;	
+			} else	if(fileName.startsWith(path)){ //Hack to distinguish between normal and 
 				fileName=QFileInfo(fileName).fileName();
 				realFile=false;
 			} else {

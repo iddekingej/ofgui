@@ -1,3 +1,4 @@
+
 /**
  *  data.h
  *  Part of ofgui.h
@@ -20,6 +21,8 @@
 
 #include <QList>
 #include <QMap>
+#include <QStringRef>
+#include "openfileiterator.h"
 #include "linklist.h"
 #include "os.h"
 class TOpenFile;
@@ -52,6 +55,7 @@ private:
  */	
 	QString programName;
 	
+
 public:
 	TProcess(long p_id,const QString &p_programName);
 	inline bool hasOpenFile(){ return !openFiles.isEmpty();}
@@ -61,7 +65,7 @@ public:
 	inline void setOwnerId(long p_ownerId){ ownerId=p_ownerId;}
 	inline long getOwnerId(){ return ownerId;}
 	inline void setOwner(const QString &p_owner){ owner=p_owner;}
-	
+
 	inline const QString &getOwner(){ return owner;}
 	void addOpenFile(TOpenFile *p_openFile);
 };
@@ -97,6 +101,10 @@ private:
  * File type;
  */
 	TFileType fileType;
+/**
+ *Open mode
+ */	
+	int openMode=0;	
 public:
 	inline TProcess *getProcess(){ return process;}
 	inline long getFd(){ return fd;}
@@ -108,23 +116,65 @@ public:
 	inline void getFileTypeStr(QString &p_fileTypeStr){
 		p_fileTypeStr=fileTypeStr(fileType);
 	}
+	inline void setOpenMode(int p_openMode){ openMode=p_openMode;}
+	inline int getOpenMode(){ return openMode;}
+	QString getOpenModeDescription();
 };
 
+/**
+ * Container contains all running processes and open files
+ */
 
 class TProcessList
 {
 private:
+	
+	/**
+	 * List of running processes
+	 */
 	TLinkList<TProcess>  programs;
+	
+	/**
+	 * List of open program
+	 */
 	TLinkList<TOpenFile> openFiles;
+	
+	/**
+	 * Mapping uid to user name
+	 */
 	QMap<uint,QString>   users;
 	
+	void processFdInfoFlags(TOpenFile *p_openFile,QStringRef p_flags);	
+	void processFdInfo(TOpenFile *p_openFile);
+	TFileType getFileType(bool p_realFile,QString &p_fileName);
+	TOpenFile *processOpenFile(TOpenFileIterator &p_openFileIter,TProcess *p_process);
 	void processOpenFiles(const QString &p_path,TProcess *p_program);
+protected:
+	virtual bool filterFiles(TOpenFileIterator &p_openFileIter);
 public:
 	inline TLinkList<TProcess> *getPrograms(){ return &programs;}
 	inline TLinkList<TOpenFile> *getOpenFiles(){ return &openFiles;}
 	
 	void processInfo();
+	virtual ~TProcessList(){};
 };
 
-TLinkList<TProcess> *processesByFile(const QString& p_fileName);
+class TProcessSignleFileList:public TProcessList
+{
+private:
+	QString filterFileName;
+protected:
+	virtual bool filterFiles(TOpenFileIterator &p_openFileIter) override;
+public:
+	inline void setFilterFileName(QString &p_fileName){
+		filterFileName=p_fileName;
+	}
+	
+	inline QString &getFilterFileName()
+	{
+		return filterFileName; 
+	}
+};
+
+
 #endif
