@@ -92,3 +92,13 @@ QString fileTypeStr(TFileType p_type)
 	}
 	
 }
+
+TFileCategory getFileCategoryFromType(TFileType p_type){
+		if(p_type==DT_FILE || p_type== DT_DIR){
+			return FC_FILE;
+		}
+		if(p_type==DT_BLOCK_DEVICE || p_type==DT_CHARACTER_DEVICE){
+			return FC_DEVICE;
+		}
+		return FC_OTHER;
+}

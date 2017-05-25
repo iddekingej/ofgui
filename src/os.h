@@ -26,7 +26,14 @@ typedef enum{
 ,	DT_UNKOWN
 } TFileType;
 
+typedef enum{
+	FC_FILE
+,	FC_DEVICE
+,	FC_OTHER
+} TFileCategory;
+
 TFileType getOSFileType(const QString p_fileName);
+TFileCategory getFileCategoryFromType(TFileType p_type);
 QString fileTypeStr(TFileType p_type);
 
 QString getUsernameById(uint p_uid);

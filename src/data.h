@@ -113,6 +113,7 @@ public:
 	TOpenFile(bool p_realFile,TProcess *p_process,long p_fd,const QString &p_fileName);
 	inline   TFileType getFileType(){ return fileType;}
 	inline void setFileType(TFileType p_fileType){ fileType=p_fileType;}
+	inline TFileCategory getFileCategory(){ return getFileCategoryFromType(fileType);}
 	inline void getFileTypeStr(QString &p_fileTypeStr){
 		p_fileTypeStr=fileTypeStr(fileType);
 	}
