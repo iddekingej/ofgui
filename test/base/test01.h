@@ -18,7 +18,7 @@ private:
 	TTestItem *item1=nullptr;
 	TTestItem *item2=nullptr;
 protected:
-	void doRun();		
+	virtual void doRun() override;		
 public:
 	void test01();
 	void test02();

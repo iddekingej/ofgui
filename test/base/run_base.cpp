@@ -1,5 +1,6 @@
 #include "run_base.h"
 #include "test01.h"
+#include "test_os.h"
 
 class TRunBaseRunner:public TRunner
 {
@@ -10,6 +11,7 @@ protected:
 	virtual void doRun()
 	{
 		runner(new TTest01());
+		runner(new TTestOS());
 	}
 	
 public:
