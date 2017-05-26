@@ -1,6 +1,7 @@
 #include <QTextStream>
 #include <QStringRef>
 #include <QVector>
+#include <QString>
 #include "processlist.h"
 #include "processiterator.h"
 #include "os.h"
@@ -30,7 +31,7 @@ void TProcessList::processFdInfoFlags(TOpenFile* p_openFile, QStringRef p_flags)
 
 void TProcessList::processFdInfo(TOpenFile* p_openFile)
 {
-	QString l_name=QString("/proc/%0/fdinfo/%1").arg(QString::number(p_openFile->getProcess()->getId()),QString::number(p_openFile->getFd()));
+	QString l_name=QString("%0/%1/fdinfo/%2").arg(procPath,QString::number(p_openFile->getProcess()->getId()),QString::number(p_openFile->getFd()));
 	QFile l_file(l_name);
 	if(!l_file.open(QIODevice::ReadOnly|QIODevice::Text)){
 		return;

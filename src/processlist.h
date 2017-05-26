@@ -12,7 +12,10 @@
 class TProcessList
 {
 private:
-	
+	/**
+	 * Path to proc infomation. Can be changed for testing
+	 */
+	QString procPath="/proc";
 	/**
 	 * List of running processes
 	 */
@@ -40,6 +43,8 @@ private:
 protected:
 	virtual bool filterFiles(TOpenFileIterator &p_openFileIter);
 public:
+	inline void setProcPath(const QString &p_path){ procPath=p_path;}
+	inline const QString &getProcPath(){ return procPath;}
 	inline TLinkList<TProcess> *getPrograms(){ return &programs;}
 	inline TLinkList<TOpenFile> *getOpenFiles(){ return &openFiles;}
 	inline QMap<QString,TFile *>  *getFiles(){ return &files;}
