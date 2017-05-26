@@ -12,6 +12,12 @@
 #include "utils.h"
 
 
+TFile::TFile(QString p_fileName)
+{
+	fileName=p_fileName;
+}
+
+
  /**
  *  TProcess object contains information about a process.
  *  
@@ -51,12 +57,12 @@ void TProcess::addOpenFile(TOpenFile* p_openFile)
  * 
  */
 
-TOpenFile::TOpenFile(bool p_realFile,TProcess* p_process, long int p_fd, const QString &p_fileName)
+TOpenFile::TOpenFile(bool p_realFile,TProcess* p_process, long int p_fd, TFile *p_file)
 {
 	realFile=p_realFile;
 	process=p_process;
 	fd=p_fd;
-	fileName=p_fileName;
+	file=p_file;
 }
 
 
@@ -70,134 +76,3 @@ QString TOpenFile::getOpenModeDescription()
 	}
 	return l_mode;
 }
-
-
-void TProcessList::processFdInfoFlags(TOpenFile* p_openFile, QStringRef p_flags)
-{
-	bool l_ok;
-	int l_flags=p_flags.toInt(&l_ok,8);
-	printf("%s=>%d \n ",qstr(p_flags),l_flags);
-	if(l_ok){
-		p_openFile->setOpenMode(l_flags);
-	}
-}
-
-
-void TProcessList::processFdInfo(TOpenFile* p_openFile)
-{
-	QString l_name=QString("/proc/%0/fdinfo/%1").arg(QString::number(p_openFile->getProcess()->getId()),QString::number(p_openFile->getFd()));
-	QFile l_file(l_name);
-	if(!l_file.open(QIODevice::ReadOnly|QIODevice::Text)){
-		printf("Failed:%s \n",qstr(l_name));
-		return;
-		
-	}
-	QTextStream l_stream(&l_file);
-	QString l_line;
-	while(true){
-		l_line=l_stream.readLine();
-		if(l_line.isNull()) break;		
-		if(l_line.length()>0){
-			QVector<QStringRef> l_split=l_line.splitRef(":");
-			printf("%s %d \n",qstr(l_line),l_split.length());
-			if(l_split.length()==2){
-				if(l_split.first()=="flags"){
-					processFdInfoFlags(p_openFile,l_split.last().trimmed());
-				}
-			}
-		}
-	}
-
-}
-
-/**
- * Get file type, see \ref TFileType
- * When \a p_realFile =true the file type is determined by stat fs call
- * Otherwise the file type is determined by its file name (\a p_fileName).
- * 
- * \param p_realFile If file name points to a file on the fs
- * \param p_fileName File name.
- */
-TFileType TProcessList::getFileType(bool p_realFile,QString &p_fileName){
-	if(p_realFile){
-		return getOSFileType(p_fileName);
-	}
-	if(p_fileName.startsWith("socket:")){
-		return DT_SOCKET;
-	}
-	if(p_fileName.startsWith("pipe:")){
-		return DT_PIPE;
-	}
-	return DT_UNKOWN;
-}
-
-TOpenFile *TProcessList::processOpenFile(TOpenFileIterator &p_openFileIter,TProcess *p_process){
-	TOpenFile *l_openFile;
-	QString l_file;
-	l_file=p_openFileIter.getFileName();
-	l_openFile=new TOpenFile(p_openFileIter.getRealFile(),p_process,p_openFileIter.getFd(),l_file);		
-	l_openFile->setFileType(getFileType(p_openFileIter.getRealFile(),l_file));
-	processFdInfo(l_openFile);
-	p_process->addOpenFile(l_openFile);
-	openFiles.append(l_openFile);
-	return l_openFile;
-}
-
- /**
- *  Read open files from one proces.
- *  The information is read from /proc/#pid#/fd
- *  This folder contain symlinks. The name  is the filediscriptor ID and links
- *  to the open file.
- *  
- *  \param p_path     Path to folder with information about pen files
- *  \param p_process  The openfiles belonging to this process
- */
-void TProcessList::processOpenFiles(const QString &p_path,TProcess *p_process)
-{
-	TOpenFile *l_openFile;
-	QString l_file;
-	TOpenFileIterator l_iter(p_path);
-	while(l_iter.next()){
-		if(filterFiles(l_iter)){
-			l_openFile=processOpenFile(l_iter,p_process);
-			p_process->addOpenFile(l_openFile);
-		}
-
-	}
-}
-
-/**
- *  Read all process info and open files
- *  This routine scans /proc folder for numerical folders. 
- *  The name of the folder is the proces ID and the folder contains information about the proces.
- *  
- */
-void TProcessList::processInfo()
-{
-	programs.clear();
-	openFiles.clear();	
-
-	getAllUsers(users);
-	TProcessIterator l_iter;
-	while(l_iter.next()){
-		
-		TProcess *l_program=new TProcess(l_iter.getId(),l_iter.getExe());
-		programs.append(l_program);
-		l_program->setOwnerId(l_iter.getUid());
-		l_program->setOwner(users.value(l_iter.getUid()));
-		processOpenFiles(l_iter.getFilePath()+QStringLiteral("/fd/"),l_program);
-		
-	}
-}
-
-bool TProcessList::filterFiles(TOpenFileIterator& p_openFileIter)
-{
-	return true;
-}
-
-bool TProcessSignleFileList::filterFiles(TOpenFileIterator& p_openFileIter)
-{
-	return p_openFileIter.getFileName()==filterFileName;
-}
-
-

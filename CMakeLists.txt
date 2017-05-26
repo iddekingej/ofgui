@@ -40,8 +40,7 @@ KI18N_WRAP_UI(ofgui_ui_h
 
 qt5_add_resources(ofgui_res_h icons.qrc)
 
-set(ofgui_SRCS   
-	src/main.cpp 
+set(ofgui_SRCS   	
 	src/mainwindow.cpp
 	src/os.cpp
 	src/data.cpp
@@ -49,6 +48,7 @@ set(ofgui_SRCS
 	src/processiterator.cpp
 	src/filelogitem.cpp
 	src/openfileiterator.cpp
+	src/processlist.cpp
 	src/utils.cpp
 	src/about.cpp
 	src/fileinfo.cpp
@@ -56,7 +56,7 @@ set(ofgui_SRCS
 
 set(ofgui_SRCS ${ofgui_res_h} ${ofgui_SRCS} ${ofgui_ui_h})
 
-add_executable(ofgui ${ofgui_SRCS})
+add_executable(ofgui src/main.cpp ${ofgui_SRCS})
 
 
 target_link_libraries(ofgui
@@ -71,4 +71,7 @@ target_link_libraries(ofgui
 install(TARGETS ofgui  ${INSTALL_TARGETS_DEFAULT_ARGS})
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
+if("${test}" EQUAL "1")
+	include("test.cmake")
+endif()
 add_subdirectory(po)

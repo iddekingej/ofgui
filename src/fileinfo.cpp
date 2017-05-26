@@ -3,7 +3,7 @@
 #include <QFileInfo>
 #include <QDateTime>
 #include "data.h"
-#include "linklist.h"
+#include "processlist.h"
 
 TFileInfo::TFileInfo(const QString p_fileName):QDialog()
 {
@@ -31,19 +31,18 @@ void TFileInfo::fillData()
 	TProcessSignleFileList l_list;
 	l_list.setFilterFileName(this->fileName);
 	l_list.processInfo();
-	TLinkList<TOpenFile> *l_op=l_list.getOpenFiles();
-	TLinkListIterator<TOpenFile> l_iter(l_op);
+	TFile *l_file=l_list.getFiles()->first();
+	
 	bool l_display=false;
-	TOpenFile *l_first=nullptr;
-	if(nullptr != l_op->getStart()){
-		l_first=l_op->getStart()->getItem();
-		l_display=(l_first->getFileCategory() != FC_OTHER);
+	
+	if(nullptr != l_file){		
+		l_display=(l_file->getFileCategory() != TFileCategory::FC_OTHER);
 	}
 	ui.fileSummary->setVisible(l_display);
 	if(l_display){
 		QFileInfo l_info(this->fileName);
 		QString l_type;
-		l_first->getFileTypeStr(l_type);
+		l_file->getFileTypeStr(l_type);
 		ui.labelType->setText(l_type);
 		ui.labelFileExists->setText(l_info.exists()?i18n("FIle exists"):i18n("File doesn't exists"));
 		ui.labelSize->setText(QString::number(l_info.size()));
@@ -63,7 +62,7 @@ void TFileInfo::fillData()
 	l_model->setHorizontalHeaderItem(4,new QStandardItem(i18n("Owner")));
 
 	
-
+	TLinkListIterator<TOpenFile> l_iter(l_list.getOpenFiles());
 	TProcess *l_process;
 	TOpenFile *l_openFile;
 	int l_cnt=0;

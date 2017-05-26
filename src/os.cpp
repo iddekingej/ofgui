@@ -54,39 +54,39 @@ void getAllUsers(QMap<uint,QString> &p_userList)
 }
 
 
-TFileType getOSFileType(const QString p_fileName){
+TFileType getOSFileType(const QString &p_fileName){
 	struct stat l_info;
 	int l_status=stat(qstr(p_fileName),&l_info);
 	if(l_status != 0){
-		return DT_FAILED;
+		return TFileType::DT_FAILED;
 	}
 	int l_fmt=l_info.st_mode & S_IFMT;
 	switch(l_fmt){
-		case S_IFSOCK:return DT_SOCKET;
-		case S_IFLNK :return DT_LINK;
-		case S_IFREG :return DT_FILE;
-		case S_IFBLK :return DT_BLOCK_DEVICE;
-		case S_IFDIR :return DT_DIR;
-		case S_IFCHR :return DT_CHARACTER_DEVICE;
-		case S_IFIFO :return DT_FIFO;
+		case S_IFSOCK:return TFileType::DT_SOCKET;
+		case S_IFLNK :return TFileType::DT_LINK;
+		case S_IFREG :return TFileType::DT_FILE;
+		case S_IFBLK :return TFileType::DT_BLOCK_DEVICE;
+		case S_IFDIR :return TFileType::DT_DIR;
+		case S_IFCHR :return TFileType::DT_CHARACTER_DEVICE;
+		case S_IFIFO :return TFileType::DT_FIFO;
 		default:
-			return DT_UNKOWN;
+			return TFileType::DT_UNKOWN;
 	}
 }
 
 QString fileTypeStr(TFileType p_type)
 {
 	switch(p_type){
-		case DT_SOCKET           : return i18n("Socket");
-		case DT_LINK             : return i18n("Link");
-		case DT_FILE             : return i18n("File");
-		case DT_BLOCK_DEVICE     : return i18n("Block device");
-		case DT_DIR              : return i18n("Directory");
-		case DT_CHARACTER_DEVICE : return i18n("Character device");
-		case DT_FIFO             : return i18n("Fifo");
-		case DT_FAILED           : return i18n("Failed");
-		case DT_PIPE             : return i18n("Pipe");
-		case DT_UNKOWN           : return i18n("Unkown");
+		case TFileType::DT_SOCKET           : return i18n("Socket");
+		case TFileType::DT_LINK             : return i18n("Link");
+		case TFileType::DT_FILE             : return i18n("File");
+		case TFileType::DT_BLOCK_DEVICE     : return i18n("Block device");
+		case TFileType::DT_DIR              : return i18n("Directory");
+		case TFileType::DT_CHARACTER_DEVICE : return i18n("Character device");
+		case TFileType::DT_FIFO             : return i18n("Fifo");
+		case TFileType::DT_FAILED           : return i18n("Failed");
+		case TFileType::DT_PIPE             : return i18n("Pipe");
+		case TFileType::DT_UNKOWN           : return i18n("Unkown");
 		default:
 			return i18n("Unkown");
 	}
@@ -94,11 +94,11 @@ QString fileTypeStr(TFileType p_type)
 }
 
 TFileCategory getFileCategoryFromType(TFileType p_type){
-		if(p_type==DT_FILE || p_type== DT_DIR){
-			return FC_FILE;
+		if(p_type==TFileType::DT_FILE || p_type== TFileType::DT_DIR){
+			return TFileCategory::FC_FILE;
 		}
-		if(p_type==DT_BLOCK_DEVICE || p_type==DT_CHARACTER_DEVICE){
-			return FC_DEVICE;
+		if(p_type==TFileType::DT_BLOCK_DEVICE || p_type==TFileType::DT_CHARACTER_DEVICE){
+			return TFileCategory::FC_DEVICE;
 		}
-		return FC_OTHER;
+		return TFileCategory::FC_OTHER;
 }

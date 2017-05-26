@@ -17,6 +17,7 @@
 #include "data.h"
 #include <QKeyEvent>
 #include <QTableView>
+#include "processlist.h"
 
 class TMainWindow:public QMainWindow
 {

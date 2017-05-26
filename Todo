@@ -3,8 +3,10 @@ Version 0.2
 * File open details
   - File information [Done]
   - Other exe that uses the file [Done]
-  - Hide file information for "other type" file
-* Better file type selection
-* Add file type column
+  - Hide file information for "other type" file [Done]
+* Improve file type selection
+* Add file type column [Done]
 * Testing
-* Sorting process selection list by program name
+* Sorting process selection list by program name[Done]
+* File notify for fileinfo (only changes) [Done]
+* When selecting a process and pressing the refresh button: Wrong process selected

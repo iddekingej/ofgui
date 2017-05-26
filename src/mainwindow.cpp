@@ -247,12 +247,12 @@ void TMainWindow::fillOpenFileGrid()
 		l_openFile=l_ofIter.next();
 		if((l_programId ==0 || (l_openFile->getProcess()->getId()==l_programId))
 		&& (!l_onlyRealFiles|| l_openFile->getRealFile())
-		&& (l_searchText.length()==0 || l_openFile->getFileName().toLower().contains(l_searchText))		
+		&& (l_searchText.length()==0 || l_openFile->getFile()->getFileName().toLower().contains(l_searchText))		
 		) {
 			QString l_fileType;
-			l_openFile->getFileTypeStr(l_fileType);
+			l_openFile->getFile()->getFileTypeStr(l_fileType);
 			l_model->setItem(l_cnt,0,new QStandardItem(QString::number(l_openFile->getFd())));
-			l_model->setItem(l_cnt,1,new QStandardItem(l_openFile->getFileName()));
+			l_model->setItem(l_cnt,1,new QStandardItem(l_openFile->getFile()->getFileName()));
 			l_model->setItem(l_cnt,2,new QStandardItem(l_openFile->getOpenModeDescription()));
 			l_model->setItem(l_cnt,3,new QStandardItem(l_fileType));
 			l_model->setItem(l_cnt,4,new QStandardItem(QString::number(l_openFile->getProcess()->getId())));

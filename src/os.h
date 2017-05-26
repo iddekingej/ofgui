@@ -12,7 +12,7 @@
 #include <QString>
 #include <QMap>
 
-typedef enum{
+enum class TFileType{
 	DT_FILE
 ,	DT_DIR
 ,	DT_BLOCK_DEVICE
@@ -24,15 +24,15 @@ typedef enum{
 ,	DT_PIPE
 ,       DT_OTHER
 ,	DT_UNKOWN
-} TFileType;
+};
 
-typedef enum{
+enum class TFileCategory{
 	FC_FILE
 ,	FC_DEVICE
 ,	FC_OTHER
-} TFileCategory;
+};
 
-TFileType getOSFileType(const QString p_fileName);
+TFileType getOSFileType(const QString &p_fileName);
 TFileCategory getFileCategoryFromType(TFileType p_type);
 QString fileTypeStr(TFileType p_type);
 
