@@ -176,6 +176,7 @@ void TMainWindow::setProgramSelector()
 	l_model->setItem(0,1,new QStandardItem(""));
 	l_model->setItem(0,2,new QStandardItem(""));
 	long l_selectedId=ui.processSelection->currentData(Qt::UserRole+1).toInt();
+
 	long l_selectedIdx=0;
 	TProcess *l_process;
 	while(l_procIter.hasNext()){
@@ -184,9 +185,6 @@ void TMainWindow::setProgramSelector()
 			QFileInfo l_info(l_process->getProgramName());
 			l_item=new QStandardItem(l_info.fileName());
 			l_item->setData(QVariant(l_process->getId()), Qt::UserRole + 1);			
-			if(l_process->getId()==l_selectedId){
-				l_selectedIdx=l_cnt;
-			}
 			l_model->setItem(l_cnt,0,l_item);
 			l_model->setItem(l_cnt,1,new QStandardItem(QFileInfo(l_info.filePath()).path()));
 			l_model->setItem(l_cnt,2,new QStandardItem(l_process->getOwner()));
@@ -197,6 +195,12 @@ void TMainWindow::setProgramSelector()
 		
 	}
 	l_model->sort(0,Qt::AscendingOrder);
+    for(int l_indx=l_cnt-1;l_indx>0;l_indx--){
+        int l_id=l_model->index(l_indx,0).data(Qt::UserRole+1).toInt();        
+        if(l_id==l_selectedId){
+                l_selectedIdx=l_indx;
+        }
+    }
 	ui.processSelection->setModel(l_model);	
 	ui.processSelection->setModelColumn(0);
 	ui.processSelection->setCurrentIndex(l_selectedIdx);
